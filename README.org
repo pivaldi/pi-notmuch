@@ -1,0 +1,16 @@
+#+title: PI/notmuch Doom Emacs Module
+
+This is my personal configuration part of [[https://github.com/pivaldi/pimacs/notmuch][pimacs/Notmuch]].
+
+It is here as an exemple to manage smartly multiple email accounts.
+
+I use [[https://www.emacswiki.org/emacs/GnusAlias][Gnus Alias]] to [[https://notmuchmail.org/emacstips/#index15h2][manage multiple identities]].
+
+When gnus-alias was loaded the following commands must be used to set yours
+identities and the rules to choice the correct identity :
+
+#+begin_src
+M-x describe-variable RET gnus-alias-identity-alist
+M-x describe-variable RET gnus-alias-identity-rules
+M-x describe-variable RET gnus-alias-default-identity
+#+end_src
