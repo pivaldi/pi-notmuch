@@ -4,7 +4,8 @@
 ;; See https://holgerschurig.github.io/en/emacs-notmuch-hello/
 (after! notmuch
   (setq
-   notmuch-saved-searches
+   notmuch-saved-searches nil
+   pi-notmuch-saved-searches
    `(
      ( :name "Inbox"
              :query "tag:inbox"
@@ -38,34 +39,34 @@
              :key ,(kbd "I"))
      ))
 
-  (setq pimacs-notmuch-accounts-saved-searches
-        `((:account (:name "IVALDI.ME" :query "tag:ivaldi.me" :key ,(kbd "i"))
-           :searches ,notmuch-saved-searches)
-          (:account (:name "OVYA.FR" :query "tag:ovya.fr" :key ,(kbd "C-o"))
-           :searches
-           ,(append
-             notmuch-saved-searches
-             `(( :name "Redmine"
-                 :query "tag:redmine"
-                 :sort-order newest-first
-                 :search-type tree
-                 :key ,(kbd "r"))
-               ( :name "Admin"
-                       :query "tag:admin"
-                       :sort-order newest-first
-                       :search-type tree
-                       :key ,(kbd "A"))
-               ( :name "Cron"
-                       :query "tag:cron"
-                       :sort-order newest-first
-                       :search-type tree
-                       :key ,(kbd "c"))
-               ( :name "Igal/Stanley"
-                       :query "tag:igal or tag:stanley"
-                       :sort-order newest-first
-                       :search-type tree
-                       :key ,(kbd "/")))
-             ))))
+  (pimacs-notmuch-accounts-saved-searches-set
+   `((:account (:name "IVALDI.ME" :query "tag:ivaldi.me" :key-prefix "i")
+      :searches ,pi-notmuch-saved-searches)
+     (:account (:name "OVYA.FR" :query "tag:ovya.fr" :key-prefix "o")
+      :searches
+      ,(append
+        pi-notmuch-saved-searches
+        `(( :name "Redmine"
+            :query "tag:redmine"
+            :sort-order newest-first
+            :search-type tree
+            :key ,(kbd "r"))
+          ( :name "Admin"
+                  :query "tag:admin"
+                  :sort-order newest-first
+                  :search-type tree
+                  :key ,(kbd "d"))
+          ( :name "Cron"
+                  :query "tag:cron"
+                  :sort-order newest-first
+                  :search-type tree
+                  :key ,(kbd "c"))
+          ( :name "Igal/Stanley"
+                  :query "tag:igal or tag:stanley"
+                  :sort-order newest-first
+                  :search-type tree
+                  :key ,(kbd "/")))
+        ))))
 
   (setq notmuch-tag-formats (append notmuch-tag-formats
                                     '(("ivaldi.me" (notmuch-apply-face tag 'notmuch-tag-added) "π"))))
