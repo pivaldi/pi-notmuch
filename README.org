@@ -2,15 +2,60 @@
 
 This is my personal configuration part of [[https://github.com/pivaldi/pimacs/notmuch][pimacs/Notmuch]].
 
-It is here as an exemple to manage smartly multiple email accounts.
+With this configuration you can see how
+- manage smartly multiple email accounts (see screenshots) ;
+- implement mail completion composing message with both ~BBDB~ and [[https://github.com/aperezdc/notmuch-addrlookup-c][Notmuch Address Lookup tool ]] ;
+- [[https://notmuchmail.org/emacstips/#index15h2][manage multiple sender identities]]
+  with [[https://www.emacswiki.org/emacs/GnusAlias][Gnus Alias]].
 
-I use [[https://www.emacswiki.org/emacs/GnusAlias][Gnus Alias]] to [[https://notmuchmail.org/emacstips/#index15h2][manage multiple identities]].
+* Prerequisites
+- Use Doom Emacs and the module [[https://github.com/pivaldi/pimacs/notmuch][pimacs/Notmuch]] ;
+- Install [[https://github.com/aperezdc/notmuch-addrlookup-c][Notmuch Address Lookup tool ]]
+  from source code (because I use the latest Emacs Notmuch UI).
+  The source of the Notmuch Emacs UI must be in the directory
+  ~/usr/local/share/emacs/site-lisp~ (see the file [[packages.el]])
+- In order use the latest installed Notmuch Emacs UI instead of the version
+  provided by Doom, *IT IS IMPORTANT TO RUN ~doom sync -u~*.
 
-When gnus-alias was loaded the following commands must be used to set yours
+* Postconfig
+
+When ~gnus-alias~ was loaded the following commands must be used to set yours
 identities and the rules to choice the correct identity :
 
 #+begin_src
 M-x describe-variable RET gnus-alias-identity-alist
 M-x describe-variable RET gnus-alias-identity-rules
 M-x describe-variable RET gnus-alias-default-identity
+#+end_src
+
+I have something like this in the file ~custom.el~
+
+#+begin_src elisp
+ '(gnus-alias-default-identity "default")
+ '(gnus-alias-identity-alist
+   '(("default" "" "\"Philippe Ivaldi\" <public@ivaldi.fr>" "Ivaldi"
+      (("X-Message-SMTP-Method" . "smtp 127.0.0.1")) "" "PI")
+     ("ac-montpellier" "default" "\"Ph. Ivaldi\" <xxx@ac-montpellier.fr>"
+      "PIPRIME.FR" (("X-Message-SMTP-Method" . "smtp smtp.ac-montpellier.fr")) "" "")
+     ("ovya" "default" "\"Philippe Ivaldi\" <xxx@ovya.com>" "OVYA"
+      (("X-Message-SMTP-Method" . "smtp smtp.gmail.com xxx@ovya.com")) ""
+      "Philippe Ivaldi, etc…")))
+ '(gnus-alias-identity-rules
+   '(("ac-montpellier" ("any" ".*ac-montpellier.fr.*" previous) "ac-montpellier")
+     ("ovya_to" ("any" ".*@ovya.*" current) "ovya")
+     ("ovya"
+      ("any"
+       "\\(.*@ovya.*\\)\\|\\(.*@costes.*\\)\\|\\(.*@returnpath.com\\)"
+       both)
+      "ovya")))
+#+end_src
+
+Not the field ~X-Message-SMTP-Method~ in the identities to configure each smtp server depending
+the sender identity that correspond to an entry in the encrypted file
+~~/.authinfo.gpg~ like this :
+
+#+begin_src txt
+machine 127.0.0.1 login xxx@ivaldi.fr password xxxxxxxxxxxxxx port 1025
+machine smtp.ac-montpellier.fr login xxx password xxxxxxxxxxx port 587
+machine smtp.gmail.com login xxxx@ovya.com password xxxxxxxxxx port 587
 #+end_src
