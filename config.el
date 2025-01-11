@@ -1,6 +1,6 @@
 ;;; pi/notmuch/config.el -*- lexical-binding: t; -*-
 
-(after! (:and pimacs/notmuch notmuch)
+(after! notmuch-multi
   (setq
    notmuch-saved-searches nil
    pi-notmuch-saved-searches
@@ -42,7 +42,7 @@
              :key ,(kbd "s"))
      ))
 
-  (pimacs-notmuch-accounts-saved-searches-set
+  (notmuch-multi-accounts-saved-searches-set
    `((:account (:name "IVALDI.ME" :query "tag:ivaldi.me" :key-prefix "i")
       :searches ,pi-notmuch-saved-searches)
      (:account (:name "OVYA.FR" :query "tag:ovya.fr" :key-prefix "o")
@@ -72,21 +72,38 @@
         ))))
 
   (setq notmuch-tag-formats (append notmuch-tag-formats
-                                    '(("ivaldi.me" (notmuch-apply-face tag 'notmuch-tag-added) "π"))))
+                                    '(("ivaldi.me" (notmuch-apply-face tag 'notmuch-tag-added) "π")
+                                      ("ovya.fr" (notmuch-apply-face tag 'notmuch-tag-added) "OVYA"))))
 
+  ;; Determines the Fcc Header which says where to save outgoing mail.
+  ;; An alist: the folder is chosen based on the From address of
+  ;; the current message according to an alist mapping regular
+  ;; expressions to folders
+  (setq
+   ;; If notmuch-maildir-use-notmuch-insert is set (the default) then
+   ;; the header should be of the form "folder +tag1 -tag2"
+   notmuch-maildir-use-notmuch-insert t
+   notmuch-fcc-dirs
+   '(("p22@ivaldi.me" . "ivaldi.me/Sent +sent -inbox -unread +ivaldi.me")
+     ("pi@ovya.fr" . "ovya.fr/[Gmail]/Sent\ Mail +sent -inbox -unread +ovya.fr")
+     ("pivaldi@ovya.fr" . "ovya.fr/[Gmail]/Sent\ Mail +sent -inbox -unread +ovya.fr")
+     (".*" . "Sent +sent -inbox -unread")))
 
   ;; Cosmetic face attributs.
   (set-face-attribute 'notmuch-tree-match-tree-face nil :foreground "black")
   (set-face-attribute 'notmuch-tree-no-match-tree-face nil :foreground "black")
   (set-face-attribute 'notmuch-search-unread-face nil :foreground "grey85")
   (set-face-attribute 'notmuch-search-subject nil :foreground "grey70")
+  (set-face-attribute 'message-separator nil :inherit '(error highlight))
 
   ;;;; BBDB and Notmuch configuration
   (use-package! bbdb
     :defer nil
     :config
     (setq bbdb-complete-mail-allow-cycling t
-          bbdb-file "/home/pi/.emacs.d/.bbdb"
+          ;; I've created the symlink /home/pi/Documents/emacs-dist/doom/.local/cache/bbdb -> /home/pi/.emacs.d/.bbdb
+          ;; bbdb-file "/home/pi/.emacs.d/.bbdb"
+
           ;; What do we do when invoking bbdb interactively
           bbdb-mua-update-interactive-p '(query . create)
           ;; Make sure we look at every address in a message and not only the
@@ -118,14 +135,18 @@
 
   ;;;; gnus-alias and Notmuch configuration
   (autoload 'gnus-alias-determine-identity "gnus-alias" "" t)
-  (add-hook 'message-setup-hook 'gnus-alias-determine-identity)
+  (add-hook 'message-setup-hook #'gnus-alias-determine-identity)
+
   ;; Don't prompt for the From: address when composing or forwarding a message.
   ;; I use gnus-alias-select-identity instead
   (setq notmuch-always-prompt-for-sender nil)
   (map!
    :map notmuch-message-mode-map
-   :desc "" "C-c g" #'gnus-alias-select-identity)
-
+   :desc "Change identity with Gnus-Alias. #pim" "C-c g" (lambda ()
+                                                           (interactive)
+                                                           (message-remove-header "Fcc")
+                                                           (gnus-alias-select-identity)
+                                                           (notmuch-fcc-header-setup)))
   (after! gnus-alias
     :defer t
     :config

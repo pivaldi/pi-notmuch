@@ -7,3 +7,4 @@
            :files ("notmuch*.el" "coolj.el")))
 
 (package! bbdb)
+(package! gnus-alias)

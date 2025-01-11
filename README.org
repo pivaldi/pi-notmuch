@@ -1,12 +1,26 @@
 #+title: PI/notmuch Doom Emacs Module
 
-This is my personal configuration part of [[https://github.com/pivaldi/pimacs/notmuch][pimacs/Notmuch]].
+This is my personal configuration part of
+[[https://github.com/pivaldi/notmuch-multi][Notmuch-Multi]] in conjunction with
+[[https://github.com/pivaldi/pimacs/notmuch][pimacs/Notmuch]].
 
 With this configuration you can see how
-- manage smartly multiple email accounts (see screenshots) ;
-- implement mail completion composing message with both ~BBDB~ and [[https://github.com/aperezdc/notmuch-addrlookup-c][Notmuch Address Lookup tool ]] ;
+- manage smartly multiple email accounts through Notmuch-Multi (see screenshots) ;
+- implement mail completion composing message with both ~BBDB~ and
+  [[https://github.com/aperezdc/notmuch-addrlookup-c][Notmuch Address Lookup tool ]] ;
 - [[https://notmuchmail.org/emacstips/#index15h2][manage multiple sender identities]]
   with [[https://www.emacswiki.org/emacs/GnusAlias][Gnus Alias]].
+
+* IMPORTANT NOTES
+- The /bash/ script [[mail-sync.sh]] is an example of IMAP synchronization with
+  [[https://github.com/gburd/isync][isync/mbsync]] and /Notmuch/ tagging for my
+  personal usage.
+  - ~mbsync~ use the completely personal config file ~~/.isyncrc~ symlinked to
+    [[.isyncrc]] for educational purpose.
+  - /Notmuch/ tagging use the file [[.notmuch-tagging]] through the symlink from
+    ~~/.notmuch-tagging~ allowing you to use your own tagging config inspired by mine.
+- The configured email directory is ~~/Maiil~, use a symbolic link to your
+  existing email directory if needed.
 
 * Prerequisites
 - Use Doom Emacs and the module [[https://github.com/pivaldi/pimacs/notmuch][pimacs/Notmuch]] ;
