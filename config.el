@@ -44,7 +44,14 @@
 
   (notmuch-multi-accounts-saved-searches-set
    `((:account (:name "IVALDI.ME" :query "tag:ivaldi.me" :key-prefix "i")
-      :searches ,pi-notmuch-saved-searches)
+      :searches ,(append pi-notmuch-saved-searches
+                         `((:name "Unclassified"
+                            :query "folder:ivaldi.me/inbox AND tag:read AND NOT tag:expire"
+                            :sort-order newest-first
+                            :search-type tree
+                            :key ,(kbd "x")
+                            ))
+                         ))
      (:account (:name "OVYA.FR" :query "tag:ovya.fr" :key-prefix "o")
       :searches
       ,(append
@@ -84,10 +91,10 @@
    ;; the header should be of the form "folder +tag1 -tag2"
    notmuch-maildir-use-notmuch-insert t
    notmuch-fcc-dirs
-   '(("p22@ivaldi.me" . "ivaldi.me/Sent +sent -inbox -unread +ivaldi.me")
-     ("pi@ovya.fr" . "ovya.fr/[Gmail]/Sent\ Mail +sent -inbox -unread +ovya.fr")
-     ("pivaldi@ovya.fr" . "ovya.fr/[Gmail]/Sent\ Mail +sent -inbox -unread +ovya.fr")
-     (".*" . "Sent +sent -inbox -unread")))
+   '(("p22@ivaldi.me" . "ivaldi.me/sent +sent -inbox -unread +ivaldi.me")
+     ("pi@ovya.fr" . "ovya.fr/sent +sent -inbox -unread +ovya.fr")
+     ("pivaldi@ovya.fr" . "ovya.fr/sent +sent -inbox -unread +ovya.fr")
+     (".*" . "sent +sent -inbox -unread")))
 
   ;; Cosmetic face attributs.
   (set-face-attribute 'notmuch-tree-match-tree-face nil :foreground "black")

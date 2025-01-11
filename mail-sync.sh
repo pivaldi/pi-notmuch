@@ -13,11 +13,15 @@ for ACCOUNT in $ACCOUNTS; do
     [ -e "$DIR" ] || mkdir -p "$DIR"
 done
 
-while true ;do
+while true; do
     ## Move mails depending of previous notmuch tags.
     mail-sync-tag-move.sh
 
-    mbsync --config "${HOME}/.isyncrc" --all || exit 1
+    echo "Syncing ivaldi.me"
+    mbsync --config "${HOME}/.isyncrc" ivaldime || exit 1
+
+    echo "Syncing ovya.fr"
+    mbsync --config "${HOME}/.isyncrc" ovyafr || exit 1
 
     notmuch new --no-hooks
 

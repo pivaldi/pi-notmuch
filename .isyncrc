@@ -10,11 +10,11 @@ CopyArrivalDate yes
 
 #### PERSONNAL ACCOUNT #####
 
-MaildirStore ivaldime-storage
+MaildirStore ivaldime-local
 SubFolders Verbatim
 ## Remember to create this directory : mkdir -p ~/Mail/ivaldi.me
 Path ~/Mail/ivaldi.me/
-Inbox ~/Mail/ivaldi.me/Inbox
+Inbox ~/Mail/ivaldi.me/inbox
 
 IMAPAccount ivaldime-account
 Host 127.0.0.1
@@ -24,33 +24,89 @@ Port 1143
 SSLType STARTTLS
 CertificateFile /etc/ssl/certs/proton-bridge.pem
 
-IMAPStore ivaldime
+IMAPStore ivaldime-remote
 Account ivaldime-account
 
-Channel ivaldime
-Far :ivaldime:
-Near :ivaldime-storage:
-Patterns INBOX Archive Sent Spam Trash Starred
+Channel ivaldime-inbox
+Far :ivaldime-remote:
+Near :ivaldime-local:
+Patterns "INBOX"
+
+Channel ivaldime-sent
+Far :ivaldime-remote:"Sent"
+Near :ivaldime-local:sent
+
+Channel ivaldime-archive
+Far :ivaldime-remote:"Archive"
+Near :ivaldime-local:archive
+
+Channel ivaldime-trash
+Far :ivaldime-remote:"Trash"
+Near :ivaldime-local:trash
+
+Channel ivaldime-starred
+Far :ivaldime-remote:"Starred"
+Near :ivaldime-local:starred
+
+Channel ivaldime-spam
+Far :ivaldime-remote:"Spam"
+Near :ivaldime-local:spam
+
+Group ivaldime
+Channel ivaldime-inbox
+Channel ivaldime-sent
+Channel ivaldime-archive
+Channel ivaldime-starred
+Channel ivaldime-spam
 
 #### OVYA ACCOUNT #####
 
-MaildirStore ovya-storage
+MaildirStore ovyafr-local
 SubFolders Verbatim
 ## Remember to create this directory : mkdir -p ~/Mail/ovya.fr
 Path ~/Mail/ovya.fr/
-Inbox ~/Mail/ovya.fr/Inbox
+Inbox ~/Mail/ovya.fr/inbox
 
-IMAPAccount ovya-account
+IMAPAccount ovyafr-account
 Host imap.gmail.com
-UserCmd "gpg -q --for-your-eyes-only -d ~/.authinfo.gpg | awk -F ' ' '/ ovya / { print $(NF-4); exit; }'"
-PassCmd "gpg -q --for-your-eyes-only -d ~/.authinfo.gpg | awk -F ' ' '/ ovya / { print $(NF-2); exit; }'"
+UserCmd "pass mbsync.ovya.fr | grep 'login:' | awk '{print $2}'"
+PassCmd "pass mbsync.ovya.fr | head -1"
 Port 993
+AuthMechs LOGIN
 SSLType IMAPS
+CertificateFile /etc/ssl/certs/ca-certificates.crt
 
-IMAPStore ovya
-Account ovya-account
+IMAPStore ovyafr-remote
+Account ovyafr-account
 
-Channel ovya
-Far :ovya:
-Near :ovya-storage:
-Patterns *
+Channel ovyafr-inbox
+Far :ovyafr-remote:
+Near :ovyafr-local:
+Patterns "INBOX"
+
+Channel ovyafr-sent
+Far :ovyafr-remote:"[Gmail]/Sent Mail"
+Near :ovyafr-local:sent
+
+Channel ovyafr-trash
+Far :ovyafr-remote:"[Gmail]/Trash"
+Near :ovyafr-local:trash
+
+Channel ovyafr-all
+Far :ovyafr-remote:"[Gmail]/All Mail"
+Near :ovyafr-local:all
+
+Channel ovyafr-starred
+Far :ovyafr-remote:"[Gmail]/Starred"
+Near :ovyafr-local:starred
+
+Channel ovyafr-spam
+Far :ovyafr-remote:"[Gmail]/Spam"
+Near :ovyafr-local:spam
+
+Group ovyafr
+Channel ovyafr-inbox
+Channel ovyafr-sent
+Channel ovyafr-all
+Channel ovyafr-starred
+Channel ovyafr-spam
