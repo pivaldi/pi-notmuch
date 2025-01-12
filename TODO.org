@@ -6,3 +6,12 @@
 - Add notification. See [[mail-sync-notify.sh]] from
   https://sqrtminusone.xyz/posts/2021-02-27-gmail/
 - Use https://marlam.de/msmtp/ to send email with Gmail app token
+
+  #+begin_src
+(defcustom notmuch-poll-script nil
+  "[Deprecated] Command to run to incorporate new mail into the notmuch database.
+
+This option has been deprecated in favor of \"notmuch new\"
+hooks (see man notmuch-hooks).  To change the path to the notmuch
+
+  #+end_src

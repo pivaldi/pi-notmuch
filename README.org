@@ -4,32 +4,53 @@ This is my personal configuration part of
 [[https://github.com/pivaldi/notmuch-multi][Notmuch-Multi]] in conjunction with
 [[https://github.com/pivaldi/pimacs/notmuch][pimacs/Notmuch]].
 
-With this configuration you can see how
-- manage smartly multiple email accounts through Notmuch-Multi (see screenshots) ;
-- implement mail completion composing message with both ~BBDB~ and
+* Features
+With this configuration you can see how :
+- Manage smartly multiple email accounts through Notmuch-Multi (see
+  screenshots) ;
+- The default Notmuch Key binding "j" permits to select one account by
+  corresponding account prefix and next the corresponding key tag.
+- In the ~Notmuch Hello~ screen, the Notmuch default key "G" synchronize the
+  remote mails with local mails and apply the configured tags of new mails.
+- Implement mail completion composing message with both ~BBDB~ and
   [[https://github.com/aperezdc/notmuch-addrlookup-c][Notmuch Address Lookup tool ]] ;
 - [[https://notmuchmail.org/emacstips/#index15h2][manage multiple sender identities]]
   with [[https://www.emacswiki.org/emacs/GnusAlias][Gnus Alias]].
+- Place [[https://notmuchmail.org/manpages/notmuch-hooks-5/][Notmuch hooks]] so
+  that so that the command ~notmuch new~ automatically move local mails to the
+  right directory depending tags, retrieve remote mails with ~mbsync~ and tags
+  new local mails using the tags' file configuration [[.notmuch-tagging]] and [[.notmuch-tagging-ovya]].
 
-* IMPORTANT NOTES
-- The /bash/ script [[mail-sync.sh]] is an example of IMAP synchronization with
-  [[https://github.com/gburd/isync][isync/mbsync]] and /Notmuch/ tagging for my
-  personal usage.
-  - ~mbsync~ use the completely personal config file ~~/.isyncrc~ symlinked to
-    [[.isyncrc]] for educational purpose.
-  - /Notmuch/ tagging use the file [[.notmuch-tagging]] through the symlink from
-    ~~/.notmuch-tagging~ allowing you to use your own tagging config inspired by mine.
-- The configured email directory is ~~/Maiil~, use a symbolic link to your
-  existing email directory if needed.
+* Screenshots
+[[https://github.com/pivaldi/notmuch-multi][See Notmuch-Multi]].
+
+* Installation
+The script [[install.sh]] does this :
+- Safely symlinks ~~/Documents/mail/~ to ~~/Mail/~ (default value of my environment variable
+  ~$MAILDIR~) because my important files are located in ~~/Documents/~.
+- Create the accounts' directories ~ivaldi.me~ and ~ovya.fr~ into ~$MAILDIR~.
+- Safely symlinks Notmuch hooks script to ~~/Mail/.notmuch/hooks~.
+  See [[https://notmuchmail.org/manpages/notmuch-hooks-5/][NOTMUCH-HOOKS
+  manpages]].
+- Safely symlinks Notmuch scripts to my personal ~~/bin~ directory which is in
+  the ~$PATH~ environment variable.
+  - [[notmuch-tag-do.sh]] : Tags all new mails
+  - [[notmuch-tag-move.sh]] : move local mails to the related directories
+    depending of tags values. For example, mail tagged "delete" will be removed.
+  - [[notmuch-notify.sh]] : notify with desktop popup when new mails are imported.
 
 * Prerequisites
-- Use Doom Emacs and the module [[https://github.com/pivaldi/pimacs/notmuch][pimacs/Notmuch]] ;
+- Use Doom Emacs and the module
+  [[https://github.com/pivaldi/pimacs/notmuch][pimacs/Notmuch]].
+  In order use the latest installed Notmuch Emacs UI instead of the version
+  provided by Doom, *IT IS IMPORTANT TO RUN ~doom sync -u~*.
 - Install [[https://github.com/aperezdc/notmuch-addrlookup-c][Notmuch Address Lookup tool ]]
   from source code (because I use the latest Emacs Notmuch UI).
-  The source of the Notmuch Emacs UI must be in the directory
+-  The source of the Notmuch Emacs UI must be in the directory
   ~/usr/local/share/emacs/site-lisp~ (see the file [[packages.el]])
-- In order use the latest installed Notmuch Emacs UI instead of the version
-  provided by Doom, *IT IS IMPORTANT TO RUN ~doom sync -u~*.
+
+*If you don't use Doom Emacs, the file [[config.el]] is easy to convert to pure*
+*Emacs lisp and you must install yourself the package [[https://github.com/pivaldi/notmuch-multi][Notmuch-Multi]].*
 
 * Postconfig
 

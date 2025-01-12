@@ -1,0 +1,6 @@
+#!/usr/bin/bash
+
+"$HOME/bin/notmuch-notify.sh"
+
+## Tag new mails.
+"$HOME/bin/notmuch-tag-do.sh"

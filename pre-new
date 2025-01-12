@@ -1,0 +1,10 @@
+#!/usr/bin/bash
+
+## Move mails depending of previous notmuch tags.
+"$HOME/bin/notmuch-tag-move.sh"
+
+echo "Syncing ivaldi.me"
+mbsync --config "${HOME}/.isyncrc" ivaldime || exit 1
+
+echo "Syncing ovya.fr"
+mbsync --config "${HOME}/.isyncrc" ovyafr || exit 1

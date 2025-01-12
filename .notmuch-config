@@ -13,6 +13,7 @@
 
 [database]
 path=/home/pi/Mail
+hook_dir=/home/pi/Mail/.notmuch/hooks
 
 # User configuration
 #

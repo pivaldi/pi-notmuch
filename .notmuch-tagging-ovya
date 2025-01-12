@@ -1,0 +1,20 @@
+## Note : OVYA Notmuch configuration set the tag "new" to all new message.
+
++ovya.fr -- tag:new AND DeliveredTo:@ovya.fr
++inbox -- tag:new AND folder:ovya.fr/inbox
+-unread -inbox +spam -- tag:new AND folder:"ovya.fr/spam"
+-unread -inbox -delete +deleted -- folder:"ovya.fr/trash"
+-unread -inbox +sent -- tag:new AND 'folder:"ovya.fr/sent"'
++archived -- tag:new AND folder:"ovya.fr/all" AND NOT tag:unread AND NOT tag:inbox AND NOT tag:sent
++flagged -- tag:new AND folder:"ovya.fr/starred"
++igal -- tag:new AND (From:"/.* inatan@/" OR To:"/.* inatan@/")
++stanley -- tag:new AND (From:"/.* snahon@/" OR To:"/.* snahon@/")
+
+-inbox +redmine -- tag:new AND XMailer:Redmine
+-inbox +cpro -- tag:new AND XRedmineProject:cpro
+-inbox +csite -- tag:new AND XRedmineProject:rcv_site
+-inbox +admin -- tag:new AND (To:/ admin@.*/ OR To:/ adminsys@.*/ OR 'ListID:admin.ovya.fr')
+-inbox +cron -- tag:new AND subject:Cron
+
+## Specific Spam Management
+-unread -inbox -important +spam -- tag:new AND (XSender:@salesforce.com OR from:rshripal446@gmail.com)

@@ -2,7 +2,7 @@
 ;;; pi/notmuch/packages.el
 
 ;; IMPORTANT: Remember to run doom sync -u after changing recipes for existing packages.
-(package! my-package
+(package! notmuch-local
   :recipe (:local-repo "/usr/local/share/emacs/site-lisp"
            :files ("notmuch*.el" "coolj.el")))
 
