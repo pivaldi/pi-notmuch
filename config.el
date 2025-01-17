@@ -1,7 +1,12 @@
 ;;; pi/notmuch/config.el -*- lexical-binding: t; -*-
 
 (after! notmuch-multi
+  ;; Sign messages by default.
+  ;; (add-hook 'message-setup-hook 'mml-secure-sign-pgpmime)
+
   (setq
+   ;; Use message sender to find an OpenPGP key to sign with
+   mml-secure-openpgp-sign-with-sender t
    notmuch-saved-searches nil
    pi-notmuch-saved-searches
    `(
@@ -46,12 +51,11 @@
    `((:account (:name "IVALDI.ME" :query "tag:ivaldi.me" :key-prefix "i")
       :searches ,(append pi-notmuch-saved-searches
                          `((:name "Unclassified"
-                            :query "folder:ivaldi.me/inbox AND tag:read AND NOT tag:expire"
+                            :query "NOT tag:inbox AND tag:read AND NOT tag:expire AND not tag:archived AND NOT tag:sent"
                             :sort-order newest-first
                             :search-type tree
                             :key ,(kbd "x")
-                            ))
-                         ))
+                            ))))
      (:account (:name "OVYA.FR" :query "tag:ovya.fr" :key-prefix "o")
       :searches
       ,(append

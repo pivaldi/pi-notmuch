@@ -102,6 +102,7 @@ header.DeliveredTo=Delivered-To
 header.XMailer=X-Mailer
 header.XRedmineProject=X-Redmine-Project
 header.ListID=List-ID
+header.XOriginatorOrg=X-OriginatorOrg
 
 # Cryptography related configuration
 #

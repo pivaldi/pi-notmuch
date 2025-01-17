@@ -1,12 +1,12 @@
 ## Note : my Notmuch configuration set the tag "new" to all new message.
 
-+ivaldi.me -- tag:new AND (to:/@ivaldi.me/ OR from:/@ivaldi.me/ OR cc:/@ivaldi.me/ OR bcc:/@ivaldi.me/)
-+inbox -- tag:new AND folder:ivaldi.me/inbox
--unread -inbox -delete +deleted -- folder:ivaldi.me/trash
--unread -inbox +spam -- tag:new AND folder:ivaldi.me/spam
--unread -inbox +sent -- tag:new AND folder:ivaldi.me/sent
--unread -inbox +archived -- tag:new AND folder:ivaldi.me/archive
-+flagged -- tag:new AND folder:ivaldi.me/starred
++ivaldi.me -- tag:new AND (DeliveredTo:@ivaldi.me OR to:/@ivaldi.me/ OR from:/@ivaldi.me/ OR cc:/@ivaldi.me/ OR bcc:/@ivaldi.me/)
++inbox -- tag:new AND folder:"ivaldi.me/inbox"
+-unread -inbox -delete +deleted -- folder:"ivaldi.me/trash"
+-unread -inbox +spam -- tag:new AND folder:"ivaldi.me/spam"
+-unread -inbox +sent -- tag:new AND folder:"ivaldi.me/sent"
+-unread -inbox +archived -- tag:new AND folder:"ivaldi.me/archive"
++flagged -- tag:new AND folder:"ivaldi.me/starred"
 
 ## Specific Spam Management
 -unread -inbox +spam -- tag:new AND XSender:/@salesforce.com/

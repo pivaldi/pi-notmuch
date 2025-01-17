@@ -68,7 +68,7 @@ I have something like this in the file ~custom.el~
 #+begin_src elisp
  '(gnus-alias-default-identity "default")
  '(gnus-alias-identity-alist
-   '(("default" "" "\"Philippe Ivaldi\" <public@ivaldi.fr>" "Ivaldi"
+   '(("default" "" "\"Philippe Ivaldi\" <xxxx@ivaldi.fr>" "Ivaldi"
       (("X-Message-SMTP-Method" . "smtp 127.0.0.1")) "" "PI")
      ("ac-montpellier" "default" "\"Ph. Ivaldi\" <xxx@ac-montpellier.fr>"
       "PIPRIME.FR" (("X-Message-SMTP-Method" . "smtp smtp.ac-montpellier.fr")) "" "")
@@ -85,7 +85,7 @@ I have something like this in the file ~custom.el~
       "ovya")))
 #+end_src
 
-Not the field ~X-Message-SMTP-Method~ in the identities to configure each smtp server depending
+Note the field ~X-Message-SMTP-Method~ in the identities to configure each smtp server depending
 the sender identity that correspond to an entry in the encrypted file
 ~~/.authinfo.gpg~ like this :
 

@@ -47,12 +47,12 @@ echo 'Removing emails tagged with expire and older than 90 days'
 notmuch search --output=files --format=text0 tag:ivaldi.me AND tag:expire AND date:-90d | xargs -r0 rm
 
 echo 'Moving emails tagged with delete to Trash'
-moveToByFiler "tag:delete AND tag:ivaldi.me AND NOT folder:$DIR_TRASH" "$DIR_TRASH"
+moveToByFiler "tag:delete AN NOT tag:deleted AND tag:ivaldi.me AND NOT folder:$DIR_TRASH" "$DIR_TRASH"
 
 ## The mails in the Trash directory are tagged as deleted when syncing…
 ## So after the next sync, they will be deleted.
-echo 'Remove mails tagged as deleted'
-notmuch search --output=files --format=text0 tag:ivaldi.me AND tag:deleted | xargs -r0 rm
+# echo 'Remove mails tagged as deleted'
+# notmuch search --output=files --format=text0 tag:ivaldi.me AND tag:deleted | xargs -r0 rm
 
 echo 'Moving archived mails'
 moveToByFiler "tag:ivaldi.me AND tag:archived AND NOT folder:$DIR_ARCHIVE" "$DIR_ARCHIVE"
@@ -70,16 +70,16 @@ echo 'Removing emails tagged with expire and older than 90 days.'
 notmuch search --output=files --format=text0 tag:ovya.fr AND tag:expire AND date:-90d | xargs -r0 rm
 
 echo 'Moving archived mails'
-moveToByFiler "tag:ovya.fr AND tag:archived AND NOT 'folder:\"${DIR_ARCHIVE}\"'" "$DIR_ARCHIVE"
-moveToByFiler "tag:ovya.fr AND NOT tag:inbox AND NOT tag:delete AND 'folder:\"${DIR_INBOX}\"'" "$DIR_ARCHIVE"
+moveToByFiler "tag:ovya.fr AND tag:archived AND NOT tag:deleted AND NOT tag:delete AND NOT 'folder:\"${DIR_ARCHIVE}\"'" "$DIR_ARCHIVE"
+moveToByFiler "tag:ovya.fr AND NOT tag:archived AND NOT tag:inbox AND NOT tag:deleted AND NOT tag:delete AND 'folder:\"${DIR_INBOX}\"'" "$DIR_ARCHIVE"
 
 echo 'Moving emails tagged with delete to Trash'
-moveToByFiler "tag:ovya.fr AND tag:delete AND NOT 'folder:\"$DIR_TRASH\"'" "$DIR_TRASH"
+moveToByFiler "tag:ovya.fr AND tag:delete AND NOT tag:deleted AND NOT 'folder:\"$DIR_TRASH\"'" "$DIR_TRASH"
 
 ## The mails in the Trash directory are tagged as deleted when syncing…
 ## So after the next sync, they will be deleted.
-echo 'Remove mails tagged as deleted'
-notmuch search --output=files --format=text0 tag:ovya.fr AND tag:deleted | xargs -r0 rm
+# echo 'Remove mails tagged as deleted'
+# notmuch search --output=files --format=text0 tag:ovya.fr AND tag:deleted | xargs -r0 rm
 
 ###}}###
 
