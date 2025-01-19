@@ -5,7 +5,7 @@
 -unread -inbox +spam -- tag:new AND folder:"ovya.fr/spam"
 -unread -inbox -delete +deleted -- folder:"ovya.fr/trash"
 -unread -inbox +sent -- 'folder:"ovya.fr/sent"'
-+archived -- tag:new AND folder:"ovya.fr/all" AND NOT tag:unread AND NOT tag:inbox AND NOT tag:sent
++archived -- tag:new AND folder:"ovya.fr/all" AND (NOT tag:unread) AND (NOT tag:inbox) AND (NOT tag:sent)
 +flagged -- tag:new AND folder:"ovya.fr/starred"
 +igal -- tag:new AND (From:"/.* inatan@/" OR To:"/.* inatan@/")
 +stanley -- tag:new AND (From:"/.* snahon@/" OR To:"/.* snahon@/")

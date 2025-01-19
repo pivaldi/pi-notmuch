@@ -1,6 +1,6 @@
 ;;; pi/notmuch/config.el -*- lexical-binding: t; -*-
 
-(after! notmuch-multi
+(after! pimacs/notmuch
   ;; Sign messages by default.
   ;; (add-hook 'message-setup-hook 'mml-secure-sign-pgpmime)
 
@@ -51,7 +51,7 @@
    `((:account (:name "IVALDI.ME" :query "tag:ivaldi.me" :key-prefix "i")
       :searches ,(append pi-notmuch-saved-searches
                          `((:name "Unclassified"
-                            :query "NOT tag:inbox AND tag:read AND NOT tag:expire AND not tag:archived AND NOT tag:sent"
+                            :query "(NOT tag:inbox) AND (NOT tag:expire) AND (NOT tag:delete) AND (NOT tag:deleted) AND (NOT tag:archived) AND (NOT tag:sent)"
                             :sort-order newest-first
                             :search-type tree
                             :key ,(kbd "x")
@@ -142,7 +142,6 @@
   ;; See https://notmuchmail.org/emacstips/#index12h2
   (require 'notmuch-address)
   (setq notmuch-address-command "/usr/local/bin/notmuch-addrlookup")
-  (notmuch-address-message-insinuate)
 
   ;;;; gnus-alias and Notmuch configuration
   (autoload 'gnus-alias-determine-identity "gnus-alias" "" t)
