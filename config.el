@@ -80,10 +80,14 @@
                   :sort-order newest-first
                   :search-type tree
                   :key ,(kbd "/")))
-        ))))
+        ))
+     (:account (:name "AC-MONTPELLIER" :query "tag:acmontpellier" :key-prefix "a")
+      :searches ,pi-notmuch-saved-searches)
+     ))
 
   (setq notmuch-tag-formats (append notmuch-tag-formats
                                     '(("ivaldi.me" (notmuch-apply-face tag 'notmuch-tag-added) "π")
+                                      ("acmontpellier" (notmuch-apply-face tag 'notmuch-tag-added) "AC-M")
                                       ("ovya.fr" (notmuch-apply-face tag 'notmuch-tag-added) "OVYA"))))
 
   ;; Determines the Fcc Header which says where to save outgoing mail.

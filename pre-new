@@ -6,5 +6,8 @@
 echo "Syncing ivaldi.me"
 mbsync --config "${HOME}/.isyncrc" ivaldime || exit 1
 
+echo "Syncing ac-montpellier.fr"
+mbsync --config "${HOME}/.isyncrc" acmontpellier || exit 1
+
 echo "Syncing ovya.fr"
 mbsync --config "${HOME}/.isyncrc" ovyafr || exit 1

@@ -35,7 +35,7 @@ MAILDIR_DEST=$(readlink "$MAILDIR")
 }
 
 echo "Creating accounts' mail directories"
-ACCOUNTS='ivaldi.me ovya.fr'
+ACCOUNTS='ivaldi.me ovya.fr acmontpellier'
 for ACCOUNT in $ACCOUNTS; do
     DIR="${MAILDIR}/$ACCOUNT"
     [ -e "$DIR" ] || mkdir -p "$DIR" || exit 1
@@ -56,7 +56,7 @@ for FILE in $FILES; do
 done
 
 echo 'Linking tags configs'
-FILES='.notmuch-tagging .notmuch-tagging-ovya'
+FILES='.notmuch-tagging .notmuch-tagging-ovya .notmuch-tagging-acmontpellier'
 for FILE in $FILES; do
     DEST_FILE="${NOTMUCH_DIR}/$FILE"
     [ -e "$DEST_FILE" ] || ln -s "$SCRIPT_DIR/$FILE" "$DEST_FILE" || exit 1

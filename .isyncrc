@@ -8,7 +8,7 @@ SyncState *
 CopyArrivalDate yes
 # PipelineDepth 10
 
-#### PERSONNAL ACCOUNT #####
+#### ivaldi.me ACCOUNT #####
 
 MaildirStore ivaldime-local
 SubFolders Verbatim
@@ -58,6 +58,43 @@ Channel ivaldime-sent
 Channel ivaldime-archive
 Channel ivaldime-starred
 Channel ivaldime-spam
+Channel ivaldime-trash
+
+#### ac-montpellier ACCOUNT #####
+
+MaildirStore acmontpellier-local
+SubFolders Verbatim
+## Remember to create this directory : mkdir -p ~/Mail/ivaldi.me
+Path ~/Mail/acmontpellier/
+Inbox ~/Mail/acmontpellier/inbox
+
+IMAPAccount acmontpellier-account
+Host courrier.ac-montpellier.fr
+UserCmd "gpg -q --for-your-eyes-only -d ~/.authinfo.gpg | awk -F ' ' '/acmontpellier/ { print $(NF-2); exit; }'"
+PassCmd "gpg -q --for-your-eyes-only -d ~/.authinfo.gpg | awk -F ' ' '/acmontpellier/ { print $(NF); exit; }'"
+Port 993
+SSLType IMAPS
+
+IMAPStore acmontpellier-remote
+Account acmontpellier-account
+
+Channel acmontpellier-inbox
+Far :acmontpellier-remote:
+Near :acmontpellier-local:
+Patterns "INBOX"
+
+Channel acmontpellier-sent
+Far :acmontpellier-remote:"Sent"
+Near :acmontpellier-local:sent
+
+Channel acmontpellier-trash
+Far :acmontpellier-remote:"Corbeille"
+Near :acmontpellier-local:trash
+
+Group acmontpellier
+Channel acmontpellier-inbox
+Channel acmontpellier-sent
+Channel acmontpellier-trash
 
 #### OVYA ACCOUNT #####
 
@@ -110,3 +147,4 @@ Channel ovyafr-sent
 Channel ovyafr-all
 Channel ovyafr-starred
 Channel ovyafr-spam
+Channel ovyafr-trash

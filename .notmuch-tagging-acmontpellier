@@ -1,0 +1,6 @@
+## Note : my Notmuch configuration set the tag "new" to all new message.
+
++acmontpellier -- tag:new AND (DeliveredTo:@ac-montpellier.fr OR to:/@ac-montpellier.fr/ OR from:/@ac-montpellier.fr/ OR cc:/@ac-montpellier.fr/ OR bcc:/@ac-montpellier.fr/)
++inbox -- tag:new AND 'folder:"acmontpellier/inbox"'
+-unread -inbox -delete +deleted -- 'folder:"acmontpellier/trash"'
+-unread -inbox +sent -- 'folder:"acmontpellier/sent"'
