@@ -48,10 +48,10 @@
      ))
 
   (notmuch-multi-accounts-saved-searches-set
-   `((:account (:name "IVALDI.ME" :query "tag:ivaldi.me" :key-prefix "i")
+   `((:account (:name "IVALDI.ME" :query "'folder:\"/ivaldi.me*/\"'" :key-prefix "i")
       :searches ,(append pi-notmuch-saved-searches
                          `((:name "Unclassified"
-                            :query "(NOT tag:inbox) AND (NOT tag:expire) AND (NOT tag:delete) AND (NOT tag:deleted) AND (NOT tag:archived) AND (NOT tag:sent)"
+                            :query "NOT tag:ivaldi.me"
                             :sort-order newest-first
                             :search-type tree
                             :key ,(kbd "x")
@@ -88,7 +88,9 @@
   (setq notmuch-tag-formats (append notmuch-tag-formats
                                     '(("ivaldi.me" (notmuch-apply-face tag 'notmuch-tag-added) "π")
                                       ("acmontpellier" (notmuch-apply-face tag 'notmuch-tag-added) "AC-M")
-                                      ("ovya.fr" (notmuch-apply-face tag 'notmuch-tag-added) "OVYA"))))
+                                      ("ovya.fr" (notmuch-apply-face tag 'notmuch-tag-added) "OVYA")))
+        ;; Don't want to reply to myself ;)
+        message-dont-reply-to-names "\\(pivaldi\\|pi\\|p[0-9]{2}\\)@\\(ovya.fr\\|ivaldi.me\\)")
 
   ;; Determines the Fcc Header which says where to save outgoing mail.
   ;; An alist: the folder is chosen based on the From address of
@@ -102,6 +104,7 @@
    '(("p22@ivaldi.me" . "ivaldi.me/sent +sent -inbox -unread +ivaldi.me")
      ("pi@ovya.fr" . "ovya.fr/sent +sent -inbox -unread +ovya.fr")
      ("pivaldi@ovya.fr" . "ovya.fr/sent +sent -inbox -unread +ovya.fr")
+     ("pivaldi@ac-montpellier.fr" . "acmontpellier/sent +sent -inbox -unread +acmontpellier")
      (".*" . "sent +sent -inbox -unread")))
 
   ;; Cosmetic face attributs.
@@ -137,8 +140,13 @@
 
     (map!
      :map notmuch-message-mode-map
-     :desc "Complete the user name or mail before point. #pi" "M-<SPC>" #'bbdb-complete-mail)
-    ;; (defalias 'notmuch-address-expand-name 'bbdb-complete-mail)
+     :desc "Complete the user name or mail before point. #pi" "M-<SPC>" #'bbdb-complete-mail
+     ;; (defalias 'notmuch-address-expand-name 'bbdb-complete-mail)
+
+     :map (notmuch-tree-mode-map notmuch-search-mode-map)
+     :desc "Edit the bbdb record corresponding to sender and recipients. #pim" ";" #'bbdb-mua-edit-field
+     :desc "Edit the bbdb record corresponding to sender. #pim" ":" #'bbdb-mua-edit-field-sender
+     )
     )
 
   ;; In conjonction with BBDB binded to M-SPC, I use
