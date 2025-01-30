@@ -1,12 +1,12 @@
 ## Note : my Notmuch configuration set the tag "new" to all new message.
 
-+ivaldi.me -- tag:new AND (DeliveredTo:@ivaldi.me OR to:/@ivaldi.me/ OR from:/@ivaldi.me/ OR cc:/@ivaldi.me/ OR bcc:/@ivaldi.me/)
-+inbox -- tag:new AND folder:"ivaldi.me/inbox"
--unread -inbox -delete +deleted -- folder:"ivaldi.me/trash"
--unread -inbox +spam -- tag:new AND folder:"ivaldi.me/spam"
--unread -inbox +sent -- tag:new AND folder:"ivaldi.me/sent"
--unread -inbox +archived -- tag:new AND folder:"ivaldi.me/archive"
+## +ivaldi.me -- tag:new AND (DeliveredTo:@ivaldi.me OR Delivered-To:@protonmail.com OR Delivered-To:@pm.me OR to:/@ivaldi.me/ OR from:/@ivaldi.me/ OR cc:/@ivaldi.me/ OR bcc:/@ivaldi.me/)
++inbox +ivaldi.me -- tag:new AND folder:"ivaldi.me/inbox"
+-unread -inbox -delete +deleted +ivaldi.me -- folder:"ivaldi.me/trash"
+-unread -inbox +spam +ivaldi.me -- tag:new AND folder:"ivaldi.me/spam"
+-unread -inbox +sent +ivaldi.me -- tag:new AND folder:"ivaldi.me/sent"
+-unread -inbox +archived +ivaldi.me -- tag:new AND folder:"ivaldi.me/archive"
 +flagged -- tag:new AND folder:"ivaldi.me/starred"
 
 ## Specific Spam Management
--unread -inbox +spam -- tag:new AND XSender:/@salesforce.com/
+-unread -inbox +spam -- tag:new AND (XSender:/@salesforce.com/ OR from:/@weassmbltek.com/)

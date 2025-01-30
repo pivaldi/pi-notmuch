@@ -1,14 +1,14 @@
 ## Note : OVYA Notmuch configuration set the tag "new" to all new message.
 
-+ovya.fr -- tag:new AND (DeliveredTo:@ovya.fr OR 'from:"/.*@ovya.fr/"')
-+inbox -- tag:new AND folder:ovya.fr/inbox
--unread -inbox +spam -- tag:new AND folder:"ovya.fr/spam"
--unread -inbox -delete +deleted -- folder:"ovya.fr/trash"
--unread -inbox +sent -- 'folder:"ovya.fr/sent"'
-+archived -- tag:new AND folder:"ovya.fr/all" AND (NOT tag:unread) AND (NOT tag:inbox) AND (NOT tag:sent)
-+flagged -- tag:new AND folder:"ovya.fr/starred"
-+igal -- tag:new AND (From:"/.* inatan@/" OR To:"/.* inatan@/")
-+stanley -- tag:new AND (From:"/.* snahon@/" OR To:"/.* snahon@/")
+# +ovya.fr -- tag:new AND (DeliveredTo:@ovya.fr OR 'from:"/.*@ovya.fr/"')
++inbox +ovya.fr -- tag:new AND folder:"ovya.fr/inbox"
+-unread -inbox +spam +ovya.fr -- tag:new AND folder:"ovya.fr/spam"
+-unread -inbox -delete -archive +deleted +ovya.fr -- folder:"ovya.fr/trash"
+-unread -inbox +sent +ovya.fr -- 'folder:"ovya.fr/sent"'
++archived +ovya.fr -- tag:new AND folder:"ovya.fr/all" AND (NOT tag:unread) AND (NOT tag:inbox) AND (NOT tag:sent)
++flagged +ovya.fr -- tag:new AND folder:"ovya.fr/starred"
++igal +ovya.fr -- tag:new AND (From:"/.* inatan@/" OR To:"/.* inatan@/")
++stanley +ovya.fr -- tag:new AND (From:"/.* snahon@/" OR To:"/.* snahon@/")
 
 -inbox +redmine -- tag:new AND XMailer:Redmine
 -inbox +cpro -- tag:new AND XRedmineProject:cpro
@@ -17,4 +17,4 @@
 -inbox +cron -- tag:new AND subject:Cron
 
 ## Specific Spam Management
--unread -inbox -important +spam -- tag:new AND (XOriginatorOrg:incwo-pro.com OR XSender:@salesforce.com OR from:rshripal446@gmail.com OR from:"/.*@agence-adocc.com/")
+-unread -inbox -important +spam -- tag:new AND (XOriginatorOrg:incwo-pro.com OR XSender:@salesforce.com OR from:rshripal446@gmail.com OR from:"/.*@agence-adocc.com/" OR from:"/.*@lead-digitalidees.site/" OR from:"/.*@sd.vml-nomi.com/")

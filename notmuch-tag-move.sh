@@ -5,7 +5,7 @@ function moveTo {
     fromFile="$1"
     toDirectory="${2#/}"            ## Remove first slash if exists.
     toDirectory="${toDirectory=%/}" ## Remove last trailing slash if exists.
-    toDirectory="${MAILDIR}/${toDirectory}/new"
+    toDirectory="${MAILDIR}/${toDirectory}/cur"
 
     toFile="${fromFile##*/}" ## Filename without directory part.
     toFile="${toFile%%,*}"   ## Remove all after the comma.
@@ -18,8 +18,8 @@ function moveToByFiler {
     filter="$1"
     toDir="$2"
 
-    files=$(notmuch search --output=files "$filter" | grep -v archived)
-    echo "notmuch search --output=files $filter | grep -v archived"
+    files=$(notmuch search --output=files "$filter")
+    echo "notmuch search --output=files $filter"
     echo -n 'Number of impacted mails is '
     notmuch count -- "$filter"
     echo
@@ -71,6 +71,8 @@ notmuch search --output=files --format=text0 tag:ovya.fr AND tag:expire AND date
 
 echo 'Moving archived mails'
 moveToByFiler "tag:ovya.fr AND tag:archived AND (NOT tag:deleted) AND (NOT tag:delete) AND (NOT 'folder:\"${DIR_ARCHIVE}\"')" "$DIR_ARCHIVE"
+
+echo 'Moving Gmail un-boxed mails to archive'
 moveToByFiler "tag:ovya.fr AND (NOT tag:archived) AND (NOT tag:inbox) AND (NOT tag:deleted) AND (NOT tag:delete) AND 'folder:\"${DIR_INBOX}\"'" "$DIR_ARCHIVE"
 
 echo 'Moving emails tagged with delete to Trash'
