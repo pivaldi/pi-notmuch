@@ -99,7 +99,7 @@
                                       ("ovya.fr" (notmuch-apply-face tag 'notmuch-tag-added) "OVYA")
                                       ("list" (notmuch-apply-face tag 'notmuch-tag-added) "L")))
         ;; Don't want to reply to myself ;)
-        message-dont-reply-to-names "\\(pivaldi\\|pi\\|p[0-9]{2}\\)@\\(ovya.fr\\|ivaldi.me\\)")
+        message-dont-reply-to-names "\\(\\(pivaldi\\|pi\\|p[0-9]{2}\\)@\\(ovya.fr\\|ivaldi.me\\)|bzgemacsfr.le.*@passmail.net\\)")
 
   ;; Determines the Fcc Header which says where to save outgoing mail.
   ;; An alist: the folder is chosen based on the From address of
@@ -114,6 +114,7 @@
      ("pi@ovya.fr" . "ovya.fr/sent +sent -inbox -unread +ovya.fr")
      ("pivaldi@ovya.fr" . "ovya.fr/sent +sent -inbox -unread +ovya.fr")
      ("pivaldi@ac-montpellier.fr" . "acmontpellier/sent +sent -inbox -unread +acmontpellier")
+     ("bzgemacsfr.le.*@passmail.net" . "ivaldi.me/sent +sent -inbox -unread +list +emacsfr")
      (".*" . "sent +sent -inbox -unread")))
 
   ;; Cosmetic face attributs.
