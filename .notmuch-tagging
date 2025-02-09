@@ -8,5 +8,9 @@
 -unread -inbox +archived +ivaldi.me -- tag:new AND folder:"ivaldi.me/archive"
 +flagged -- tag:new AND folder:"ivaldi.me/starred"
 
+## Lists
++list -- tag:new AND 'from:"/.*@lists.sr.ht/"'
++emacsfr +list -- tag:new AND to:"/.*bzg.?emacsfr.*/"
+
 ## Specific Spam Management
 -unread -inbox +spam -- tag:new AND (XSender:/@salesforce.com/ OR from:/@weassmbltek.com/)

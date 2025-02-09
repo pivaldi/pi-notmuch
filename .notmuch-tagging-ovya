@@ -4,17 +4,17 @@
 +inbox +ovya.fr -- tag:new AND folder:"ovya.fr/inbox"
 -unread -inbox +spam +ovya.fr -- tag:new AND folder:"ovya.fr/spam"
 -unread -inbox -delete -archive +deleted +ovya.fr -- folder:"ovya.fr/trash"
--unread -inbox +sent +ovya.fr -- 'folder:"ovya.fr/sent"'
+-unread -inbox +sent +ovya.fr -- folder:"ovya.fr/sent"
 +archived +ovya.fr -- tag:new AND folder:"ovya.fr/all" AND (NOT tag:unread) AND (NOT tag:inbox) AND (NOT tag:sent)
 +flagged +ovya.fr -- tag:new AND folder:"ovya.fr/starred"
-+igal +ovya.fr -- tag:new AND (From:"/.* inatan@/" OR To:"/.* inatan@/")
-+stanley +ovya.fr -- tag:new AND (From:"/.* snahon@/" OR To:"/.* snahon@/")
++igal +ovya.fr -- tag:new AND (from:"/.* inatan@/" OR to:"/.* inatan@/")
++stanley +ovya.fr -- tag:new AND (from:"/.* snahon@/" OR to:"/.* snahon@/")
 
--inbox +redmine -- tag:new AND XMailer:Redmine
--inbox +cpro -- tag:new AND XRedmineProject:cpro
--inbox +csite -- tag:new AND XRedmineProject:rcv_site
--inbox +admin -- tag:new AND (To:/ admin@.*/ OR To:/ adminsys@.*/ OR 'ListID:admin.ovya.fr')
+-inbox +redmine +ovya.fr -- tag:new AND XMailer:Redmine
+-inbox +ovya.fr +cpro -- tag:new AND XRedmineProject:cpro
+-inbox +ovya.fr +csite -- tag:new AND XRedmineProject:rcv_site
+-inbox +ovya.fr +admin -- tag:new AND (to:"/.* admin@.*/" OR to:"/.* adminsys@.*/" OR ListID:admin.ovya.fr)
 -inbox +cron -- tag:new AND subject:Cron
 
 ## Specific Spam Management
--unread -inbox -important +spam -- tag:new AND (XOriginatorOrg:incwo-pro.com OR XSender:@salesforce.com OR from:rshripal446@gmail.com OR from:"/.*@agence-adocc.com/" OR from:"/.*@lead-digitalidees.site/" OR from:"/.*@sd.vml-nomi.com/")
+-unread -inbox -important +spam -archive +expire -- tag:new AND ('XOriginatorOrg:"incwo-pro.com"' OR 'XSender:"@salesforce.com"' OR 'from:"rshripal446@gmail.com|agence-adocc.com|lead-digitalidees.site|sd.vml-nomi.com|weassmbltek.com"')
