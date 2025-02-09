@@ -48,7 +48,7 @@
      ))
 
   (notmuch-multi-accounts-saved-searches-set
-   `((:account (:name "IVALDI.ME" :query "'folder:\"/ivaldi.me*/\"'" :key-prefix "i")
+   `((:account (:name "IVALDI.ME" :query "'folder:\"/ivaldi.me*/\"' AND NOT tag:list" :key-prefix "i")
       :searches ,(append pi-notmuch-saved-searches
                          `((:name "Unclassified"
                             :query "NOT tag:ivaldi.me"
@@ -81,6 +81,14 @@
                   :search-type tree
                   :key ,(kbd "/")))
         ))
+     (:account (:name "LISTS" :query "tag:list" :key-prefix "l")
+      :searches
+      (( :name "Emacsfr"
+               :query "tag:emacsfr"
+               :sort-order newest-first
+               :search-type tree
+               :key ,(kbd "e")))
+      )
      (:account (:name "AC-MONTPELLIER" :query "tag:acmontpellier" :key-prefix "a")
       :searches ,pi-notmuch-saved-searches)
      ))
@@ -88,7 +96,8 @@
   (setq notmuch-tag-formats (append notmuch-tag-formats
                                     '(("ivaldi.me" (notmuch-apply-face tag 'notmuch-tag-added) "π")
                                       ("acmontpellier" (notmuch-apply-face tag 'notmuch-tag-added) "AC-M")
-                                      ("ovya.fr" (notmuch-apply-face tag 'notmuch-tag-added) "OVYA")))
+                                      ("ovya.fr" (notmuch-apply-face tag 'notmuch-tag-added) "OVYA")
+                                      ("list" (notmuch-apply-face tag 'notmuch-tag-added) "L")))
         ;; Don't want to reply to myself ;)
         message-dont-reply-to-names "\\(pivaldi\\|pi\\|p[0-9]{2}\\)@\\(ovya.fr\\|ivaldi.me\\)")
 
