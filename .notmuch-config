@@ -33,8 +33,6 @@ hook_dir=/home/pi/Mail/.notmuch/hooks
 
 [user]
 name=Philippe IVALDI
-primary_email=p22@ivaldi.me
-other_email=pi@ovya.fr;catchall@ivaldi.me;
 
 # Configuration for "notmuch new"
 #
@@ -53,7 +51,7 @@ other_email=pi@ovya.fr;catchall@ivaldi.me;
 
 [new]
 tags=new
-ignore=.uidvalidity;.mbsyncstate;/.*[.](json|lock|bak)$/
+ignore=.uidvalidity;/.mbsyncstate([.]journal|[.]new)*/;/.*[.](json|lock|bak|journal)$/
 
 # Search configuration
 #
@@ -66,7 +64,7 @@ ignore=.uidvalidity;.mbsyncstate;/.*[.](json|lock|bak)$/
 #
 
 [search]
-exclude_tags=deleted;spam
+exclude_tags=deleted
 
 # Maildir compatibility configuration
 #

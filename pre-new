@@ -13,7 +13,7 @@ notify() {
 syncmail() {
     echo "Syncing $2"
     ## See https://unix.stackexchange.com/a/474195
-    { err=$(mbsync --config "${HOME}/.isyncrc" $1 2>&1 >&3 3>&-); } 3>&1
+    { err=$(mbsync --config "${HOME}/.isyncrc" "$1" 2>&1 >&3 3>&-); } 3>&1
     [ "" == "$err" ] || notify "$2" "$err"
     err=''
 }
