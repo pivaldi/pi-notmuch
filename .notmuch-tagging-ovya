@@ -17,4 +17,4 @@
 -inbox +cron -- tag:new AND subject:Cron
 
 ## Specific Spam Management
--unread -inbox -important +spam -archive +expire -- tag:new AND ('XOriginatorOrg:"incwo-pro.com"' OR 'XSender:"@salesforce.com"' OR 'from:"rshripal446@gmail.com|agence-adocc.com|lead-digitalidees.site|sd.vml-nomi.com|weassmbltek.com"')
+-unread -inbox -important -archive +spam +expire -- tag:new AND ('XOriginatorOrg:"incwo-pro.com"' OR 'XSender:"@salesforce.com"' OR 'from:"rshripal446@gmail.com|agence-adocc.com|lead-digitalidees.site|sd.vml-nomi.com|weassmbltek.com"')
