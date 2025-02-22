@@ -14,14 +14,14 @@ function moveTo {
     mv -f "$fromFile" "${toDirectory}/${toFile}" || exit 1
 }
 
-function moveToByFiler {
+function moveToByFilter {
     filter="$1"
     toDir="$2"
 
-    files=$(notmuch search --exclude=false --output=files -- "$filter")
+    files="$(notmuch search --exclude=false --output=files -- "$filter")"
     echo "notmuch search --output=files $filter"
     echo -n 'Number of impacted mails is '
-    notmuch count -- "$filter"
+    notmuch count --exclude=false -- "$filter"
     echo
 
     IFS=$'\n'
@@ -35,12 +35,12 @@ function moveExpireToTrash {
     account="$1"
     trashDir="$account/trash"
     echo "Account $account -- Moving emails tagged with expire and older than 90 days to ${trashDir}."
-    moveToByFiler "tag:$account AND tag:expire AND (NOT tag:deleted) AND (NOT tag:delete) AND date:-90d" "$trashDir"
+    moveToByFilter "tag:$account AND tag:expire AND (NOT tag:deleted) AND (NOT tag:delete) AND date:-90d" "$trashDir"
 }
 
 function delete {
     filter="$1"
-    files=$(notmuch search --exclude=false --output=files --format=text0 -- "$filter")
+    files="$(notmuch search --exclude=false --output=files -- "$filter")"
     echo "Removing emails filtered by '${filter}'."
     echo -n 'Number of impacted mails is '
     notmuch count -- "$filter"
@@ -50,7 +50,10 @@ function delete {
     IFS=$'\n'
     for file in $files; do
         echo -n "Removing file $file  "
-        rm "$file" && echo '[DONE]' || echo '[FAILED]'
+        rm "$file" && echo '[DONE]' || {
+            echo '[FAILED]'
+            exit 1
+        }
     done
     unset IFS
 }
@@ -81,10 +84,10 @@ echo 'Processing IVALDI.ME...'
 moveExpireToTrash "ivaldi.me"
 
 echo 'Moving archived mails'
-moveToByFiler "tag:ivaldi.me AND tag:archived AND (NOT folder:$DIR_ARCHIVE)" "$DIR_ARCHIVE"
+moveToByFilter "tag:ivaldi.me AND tag:archived AND (NOT folder:$DIR_ARCHIVE)" "$DIR_ARCHIVE"
 
 echo 'Moving emails tagged with delete to Trash'
-moveToByFiler "tag:delete AN (NOT tag:deleted) AND tag:ivaldi.me AND (NOT folder:$DIR_TRASH)" "$DIR_TRASH"
+moveToByFilter "tag:delete AN (NOT tag:deleted) AND tag:ivaldi.me AND (NOT folder:$DIR_TRASH)" "$DIR_TRASH"
 
 echo 'Remove mails tagged as deleted 30 days old'
 delete "tag:ivaldi.me AND tag:deleted AND date:-30d AND 'folder:\"$DIR_TRASH\"'"
@@ -101,13 +104,13 @@ echo 'Processing OVYA.FR...'
 moveExpireToTrash "ovya.fr"
 
 echo 'Moving archived mails'
-moveToByFiler "tag:ovya.fr AND tag:archived AND (NOT tag:deleted) AND (NOT tag:delete) AND (NOT 'folder:\"${DIR_ARCHIVE}\"')" "$DIR_ARCHIVE"
+moveToByFilter "tag:ovya.fr AND tag:archived AND (NOT tag:deleted) AND (NOT tag:delete) AND (NOT 'folder:\"${DIR_ARCHIVE}\"')" "$DIR_ARCHIVE"
 
 echo 'Moving Gmail un-boxed mails to archive'
-moveToByFiler "tag:ovya.fr AND (NOT tag:archived) AND (NOT tag:inbox) AND (NOT tag:deleted) AND (NOT tag:delete) AND 'folder:\"${DIR_INBOX}\"'" "$DIR_ARCHIVE"
+moveToByFilter "tag:ovya.fr AND (NOT tag:archived) AND (NOT tag:inbox) AND (NOT tag:deleted) AND (NOT tag:delete) AND 'folder:\"${DIR_INBOX}\"'" "$DIR_ARCHIVE"
 
 echo 'Moving emails tagged with delete to Trash'
-moveToByFiler "tag:ovya.fr AND (NOT tag:archived) AND tag:delete AND (NOT tag:deleted) AND (NOT 'folder:\"$DIR_TRASH\"')" "$DIR_TRASH"
+moveToByFilter "tag:ovya.fr AND (NOT tag:archived) AND tag:delete AND (NOT tag:deleted) AND (NOT 'folder:\"$DIR_TRASH\"')" "$DIR_TRASH"
 
 echo 'Removing emails tagged deleted 30 days old.'
 delete "tag:ovya.fr AND tag:deleted AND date:-30d AND 'folder:\"$DIR_TRASH\"'"
