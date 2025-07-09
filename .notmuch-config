@@ -64,7 +64,7 @@ ignore=.uidvalidity;/.mbsyncstate([.]journal|[.]new)*/;/.*[.](json|lock|bak|jour
 #
 
 [search]
-exclude_tags=deleted
+exclude_tags=delete;deleted
 
 # Maildir compatibility configuration
 #

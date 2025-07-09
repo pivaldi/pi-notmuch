@@ -28,7 +28,7 @@ echo 'Linking MAILDIR to deported MAILDIR'
 
 MAILDIR_DEST=$(readlink "$MAILDIR")
 
-[ "$MAILDIR_DEST" == "$DEPORTED_MAIL_DIR/" ] || {
+[ "$MAILDIR_DEST" == "$DEPORTED_MAIL_DIR" ] || {
     echo "$MAILDIR is a symlink to $MAILDIR_DEST, not to $DEPORTED_MAIL_DIR"
     echo 'Process aborted'
     exit 1

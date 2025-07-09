@@ -5,7 +5,7 @@
 -unread -inbox +spam +ovya.fr -- tag:new AND folder:"ovya.fr/spam"
 -unread -inbox -delete -archive +deleted +ovya.fr -- folder:"ovya.fr/trash"
 -unread -inbox +sent +ovya.fr -- folder:"ovya.fr/sent"
-+archived +ovya.fr -- tag:new AND folder:"ovya.fr/all" AND (NOT tag:unread) AND (NOT tag:inbox) AND (NOT tag:sent)
++archived +ovya.fr -- tag:new AND folder:"ovya.fr/all" AND (NOT tag:unread) AND (NOT tag:inbox) AND (NOT tag:sent) AND (NOT folder:"ovya.fr/trash") AND (NOT tag:spam)
 +flagged +ovya.fr -- tag:new AND folder:"ovya.fr/starred"
 +igal +ovya.fr -- tag:new AND (from:"/.* inatan@/" OR to:"/.* inatan@/")
 +stanley +ovya.fr -- tag:new AND (from:"/.* snahon@/" OR to:"/.* snahon@/")
@@ -17,4 +17,4 @@
 -inbox +cron -- tag:new AND subject:Cron
 
 ## Specific Spam Management
--unread -inbox -important -archive +spam +expire -- tag:new AND ('XOriginatorOrg:"incwo-pro.com"' OR 'XSender:"@salesforce.com"' OR 'from:"rshripal446@gmail.com|agence-adocc.com|lead-digitalidees.site|sd.vml-nomi.com|weassmbltek.com"')
+-unread -inbox -important -archive +spam +expire -- ('XOriginatorOrg:"incwo-pro.com"' OR 'XSender:"@salesforce.com"' OR 'from:"/.*cubetcampaigns.com.*|.*thecognitiveceo.com.*|.*usebrandhero.com.*|.*startlabs-solutions.info.*|.*quadient.com.*|.*smashkloud.com.*|.*fieldvo.co.*|.*shorthills.com.*|.*stoneflymail2.com.*|.*kualitatem.site.*|.*@ventuse.online.*|.*digitalidees-agency.site|.*rare.engineer|.*efidem.com|rshripal446@gmail.com|.*agence-adocc.com|.*lead-digitalidees.site|.*sd.vml-nomi.com|.*weassmbltek.com/"')

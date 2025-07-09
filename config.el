@@ -11,17 +11,17 @@
    pi-notmuch-saved-searches
    `(
      ( :name "Inbox"
-             :query "tag:inbox"
+             :query "tag:inbox and not delete and not deleted"
              :sort-order newest-first
              :search-type tree
              :key ,(kbd "i"))
      ( :name "Unread Inbox"
-             :query "tag:unread and tag:inbox"
+             :query "tag:unread and tag:inbox and not delete and not deleted"
              :sort-order newest-first
              :search-type tree
              :key ,(kbd "u"))
      ( :name "Unread"
-             :query "tag:unread"
+             :query "tag:unread and not delete and not deleted"
              :sort-order newest-first
              :search-type tree
              :key ,(kbd "U"))
@@ -31,24 +31,24 @@
              :search-type tree
              :key ,(kbd "a"))
      ( :name "Archived"
-             :query "tag:archived"
+             :query "tag:archived and not delete and not deleted"
              :sort-order newest-first
              :search-type tree
              :key ,(kbd "A"))
      ( :name "Important"
-             :query "tag:important"
+             :query "tag:important and not delete and not deleted"
              :sort-order newest-first
              :search-type tree
              :key ,(kbd "I"))
      ( :name "Starred"
-             :query "tag:flagged"
+             :query "tag:flagged and not delete and not deleted"
              :sort-order newest-first
              :search-type tree
              :key ,(kbd "s"))
      ))
 
   (notmuch-multi-accounts-saved-searches-set
-   `((:account (:name "IVALDI.ME" :query "'folder:\"/ivaldi.me*/\"' AND NOT tag:list" :key-prefix "i")
+   `((:account (:name "IVALDI.ME" :query "'folder:\"/ivaldi.me*/\"' AND NOT tag:list and not delete and not deleted" :key-prefix "i")
       :searches ,(append pi-notmuch-saved-searches
                          `((:name "Unclassified"
                             :query "NOT tag:ivaldi.me"
@@ -56,7 +56,7 @@
                             :search-type tree
                             :key ,(kbd "x")
                             ))))
-     (:account (:name "OVYA.FR" :query "tag:ovya.fr" :key-prefix "o")
+     (:account (:name "OVYA.FR" :query "tag:ovya.fr and not delete and not deleted" :key-prefix "o")
       :searches
       ,(append
         pi-notmuch-saved-searches
@@ -185,8 +185,9 @@
     (setq gnus-alias-allow-forward-as-reply t
           gnus-alias-overlay-identities nil
           gnus-alias-unknown-identity-rule 'continue
-          )
-    )
+          ))
+
+  (set-face-attribute 'notmuch-search-unread-face nil :foreground "grey95")
   )
 
 (provide 'pi/notmuch)

@@ -6,7 +6,7 @@ ICON='/usr/share/icons/Adwaita/64x64/status/network-offline-symbolic.symbolic.pn
 
 ## $1 = Title, $2 = message
 notify() {
-    notify-send --app-name=MBSYNC --urgency=critical --icon="$ICON" "Error retrieving mails of $1" "$2"
+    notify-send --expire-time=10000 --app-name=MBSYNC --urgency=critical --icon="$ICON" "Error retrieving mails of $1" "$2"
 }
 
 ## $1 = .isync mail entry, $2 = mail address for notification
