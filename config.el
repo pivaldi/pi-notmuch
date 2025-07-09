@@ -88,6 +88,11 @@
                :sort-order newest-first
                :search-type tree
                :key ,(kbd "e")))
+      (( :name "Cypherpunks"
+               :query "tag:cpunks"
+               :sort-order newest-first
+               :search-type tree
+               :key ,(kbd "c")))
       )
      (:account (:name "AC-MONTPELLIER" :query "tag:acmontpellier" :key-prefix "a")
       :searches ,pi-notmuch-saved-searches)
@@ -115,6 +120,7 @@
      ("pivaldi@ovya.fr" . "ovya.fr/sent +sent -inbox -unread +ovya.fr")
      ("pivaldi@ac-montpellier.fr" . "acmontpellier/sent +sent -inbox -unread +acmontpellier")
      ("bzgemacsfr.le.*@passmail.net" . "ivaldi.me/sent +sent -inbox -unread +list +emacsfr")
+     ("cypherpunks.*@passmail.net" . "ivaldi.me/sent +sent -inbox -unread +list +cpunks")
      (".*" . "sent +sent -inbox -unread")))
 
   ;; Cosmetic face attributs.
