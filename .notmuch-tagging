@@ -9,7 +9,7 @@
 +flagged -- tag:new AND folder:"ivaldi.me/starred"
 
 ## Lists
-+list -- tag:new AND 'from:"/.*@lists.sr.ht/"'
++list -- tag:new AND 'from:"/.*@lists.sr.ht.*/"'
 +emacsfr +list -- tag:new AND to:"/.*bzg.?emacsfr.*/"
 +cpunks +list -- tag:new AND to:"/.*cpunks.org.*/"
 
