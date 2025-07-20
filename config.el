@@ -87,12 +87,12 @@
                :query "tag:emacsfr"
                :sort-order newest-first
                :search-type tree
-               :key ,(kbd "e")))
+               :key ,(kbd "e"))
       ( :name "Cypherpunks"
                :query "tag:cpunks"
                :sort-order newest-first
                :search-type tree
-               :key ,(kbd "c"))
+               :key ,(kbd "c")))
       )
      (:account (:name "AC-MONTPELLIER" :query "tag:acmontpellier" :key-prefix "a")
       :searches ,pi-notmuch-saved-searches)
