@@ -3,7 +3,7 @@
 # +ovya.fr -- tag:new AND (DeliveredTo:@ovya.fr OR 'from:"/.*@ovya.fr/"')
 +inbox +ovya.fr -- tag:new AND folder:"ovya.fr/inbox"
 -unread -inbox +spam +ovya.fr -- tag:new AND folder:"ovya.fr/spam"
--unread -inbox -delete -archive +deleted +ovya.fr -- folder:"ovya.fr/trash"
+-unread -inbox -delete -archived +deleted +ovya.fr -- (NOT tag:deleted) AND folder:"ovya.fr/trash"
 -unread -inbox +sent +ovya.fr -- folder:"ovya.fr/sent"
 +archived +ovya.fr -- tag:new AND folder:"ovya.fr/all" AND (NOT tag:unread) AND (NOT tag:inbox) AND (NOT tag:sent) AND (NOT folder:"ovya.fr/trash") AND (NOT tag:spam)
 +flagged +ovya.fr -- tag:new AND folder:"ovya.fr/starred"
@@ -13,8 +13,8 @@
 -inbox +redmine +ovya.fr -- tag:new AND XMailer:Redmine
 -inbox +ovya.fr +cpro -- tag:new AND XRedmineProject:cpro
 -inbox +ovya.fr +csite -- tag:new AND XRedmineProject:rcv_site
--inbox +ovya.fr +admin -- tag:new AND (to:"/.* admin@.*/" OR to:"/.* adminsys@.*/" OR ListID:admin.ovya.fr)
--inbox +cron -- tag:new AND subject:Cron
+-inbox +ovya.fr +admin -unread +archived -- tag:new AND (to:"/.* admin@.*/" OR to:"/.* adminsys@.*/" OR ListID:admin.ovya.fr)
+-inbox +cron -unread +archived -- tag:new AND subject:Cron
 
 ## Specific Spam Management
--unread -inbox -important -archive +spam +expire -- ('XOriginatorOrg:"incwo-pro.com"' OR 'XSender:"@salesforce.com"' OR 'from:"/.*aalphaleaadllc.info.*|.*rankboostsuggestion.com.*|.*trainingcreatively.com.*|.*cubetcampaigns.com.*|.*thecognitiveceo.com.*|.*usebrandhero.com.*|.*startlabs-solutions.info.*|.*quadient.com.*|.*smashkloud.com.*|.*fieldvo.co.*|.*shorthills.com.*|.*stoneflymail2.com.*|.*kualitatem.site.*|.*@ventuse.online.*|.*digitalidees-agency.site|.*rare.engineer|.*efidem.com|rshripal446@gmail.com|.*agence-adocc.com|.*lead-digitalidees.site|.*sd.vml-nomi.com|.*weassmbltek.com/"')
+-unread -inbox -important -archive +spam +expire -- ('XOriginatorOrg:"incwo-pro.com"' OR 'XSender:"@salesforce.com"' OR 'from:"/.*guardeycybersecurityapp.info.*|.*dailycontact.fr.*|.*guardeysoc.info.*|.*touchtrack.info.*|.*rankstrdirect.click.*|.*ludotechdevs.click.*|.*courrielmanager.fr.*|.*@firni.info.*|.*courrielprofessionnel.fr.*|.*office-box.fr.*|.*day1exp.pro.*|.*leadershipmastery.com.*|.*iqhired.com.*|.*alphabeaconhub.info.*|.*pronlighten.com.*|.*decideurweb.fr.*|.*reportlinker.com.*|.*kanzen.info.*|.*mg.trk-beta.net.*|.*leadlane.info.*|.*verodubainest.com.*|.*openpos.tech.*|.*monbien-events.com.*|.*byggraitech.com.*|.*idc.com.*|.*webpronews.com.*|.*mailleader.fr.*|.*clavon.co.*|.*mailtomanager.fr.*|.*info.managercom.fr.*|.*manageroffice.fr.*|.*benjamin-sansy-dev.com.*|.*rankstaseoscale.com.*|.*makewithbyggr.com.*|.*aalphaleaadllc.info.*|.*rankboostsuggestion.com.*|.*trainingcreatively.com.*|.*cubetcampaigns.com.*|.*thecognitiveceo.com.*|.*usebrandhero.com.*|.*startlabs-solutions.info.*|.*quadient.com.*|.*smashkloud.com.*|.*fieldvo.co.*|.*shorthills.com.*|.*stoneflymail2.com.*|.*kualitatem.site.*|.*@ventuse.online.*|.*digitalidees-agency.site|.*rare.engineer|.*efidem.com|rshripal446@gmail.com|.*agence-adocc.com|.*lead-digitalidees.site|.*sd.vml-nomi.com|.*weassmbltek.com/"' OR 'to:"/.*pi+salesforce.com@ovya.fr.*/"')

@@ -1,12 +1,19 @@
 #!/usr/bin/bash
 
+RED_BOLD=$(
+    tput setaf 1
+    tput bold
+)
+RESET=$(tput sgr0)
+
 # Hard coded file path is bad :(
 ## TODO: To be fixed
-ICON='/usr/share/icons/Adwaita/64x64/status/network-offline-symbolic.symbolic.png'
+ICON='/usr/share/icons/Adwaita/symbolic/status/network-offline-symbolic.svg'
 
 ## $1 = Title, $2 = message
 notify() {
-    notify-send --expire-time=10000 --app-name=MBSYNC --urgency=critical --icon="$ICON" "Error retrieving mails of $1" "$2"
+    # notify-send --expire-time=10000 --app-name=MBSYNC --urgency=critical --icon="$ICON" "Error retrieving mails of $1" "$2"
+    echo -e "${RED_BOLD}$1 > ${2}${RESET}\n"
 }
 
 ## $1 = .isync mail entry, $2 = mail address for notification
@@ -22,5 +29,5 @@ syncmail() {
 "$HOME/bin/notmuch-tag-move.sh"
 
 syncmail 'ivaldime' 'ivaldi.me'
-syncmail 'acmontpellier' 'ac-montpellier.fr'
+# syncmail 'acmontpellier' 'ac-montpellier.fr'
 syncmail 'ovyafr' 'ovya.fr'
