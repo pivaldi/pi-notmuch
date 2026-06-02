@@ -8,7 +8,7 @@ RESET=$(tput sgr0)
 
 # Hard coded file path is bad :(
 ## TODO: To be fixed
-ICON='/usr/share/icons/Adwaita/symbolic/status/network-offline-symbolic.svg'
+# ICON='/usr/share/icons/Adwaita/symbolic/status/network-offline-symbolic.svg'
 
 ## $1 = Title, $2 = message
 notify() {
@@ -28,6 +28,5 @@ syncmail() {
 ## Move mails depending of previous notmuch tags.
 "$HOME/bin/notmuch-tag-move.sh"
 
-syncmail 'ivaldime' 'ivaldi.me'
-# syncmail 'acmontpellier' 'ac-montpellier.fr'
-syncmail 'ovyafr' 'ovya.fr'
+# syncmail 'ivaldime' 'ivaldi.me'
+# syncmail 'ovyafr' 'ovya.fr'

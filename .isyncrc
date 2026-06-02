@@ -10,13 +10,13 @@ CopyArrivalDate yes
 
 #### ivaldi.me ACCOUNT #####
 
-MaildirStore ivaldime-local
+MaildirStore ivaldi.me-local
 SubFolders Verbatim
 ## Remember to create this directory : mkdir -p ~/Mail/ivaldi.me
 Path ~/Mail/ivaldi.me/
 Inbox ~/Mail/ivaldi.me/inbox
 
-IMAPAccount ivaldime-account
+IMAPAccount ivaldi.me-account
 Host 127.0.0.1
 UserCmd "gpg -q --for-your-eyes-only -d ~/.authinfo.gpg | awk -F ' ' '/127.0.0.1/ { print $(NF-4); exit; }'"
 PassCmd "gpg -q --for-your-eyes-only -d ~/.authinfo.gpg | awk -F ' ' '/127.0.0.1/ { print $(NF-2); exit; }'"
@@ -24,41 +24,41 @@ Port 1143
 TLSType STARTTLS
 CertificateFile /etc/ssl/certs/proton-bridge.pem
 
-IMAPStore ivaldime-remote
-Account ivaldime-account
+IMAPStore ivaldi.me-remote
+Account ivaldi.me-account
 
-Channel ivaldime-inbox
-Far :ivaldime-remote:
-Near :ivaldime-local:
+Channel ivaldi.me-inbox
+Far :ivaldi.me-remote:
+Near :ivaldi.me-local:
 Patterns "INBOX"
 
-Channel ivaldime-sent
-Far :ivaldime-remote:"Sent"
-Near :ivaldime-local:sent
+Channel ivaldi.me-sent
+Far :ivaldi.me-remote:"Sent"
+Near :ivaldi.me-local:sent
 
-Channel ivaldime-archive
-Far :ivaldime-remote:"Archive"
-Near :ivaldime-local:archive
+Channel ivaldi.me-archive
+Far :ivaldi.me-remote:"Archive"
+Near :ivaldi.me-local:archive
 
-Channel ivaldime-trash
-Far :ivaldime-remote:"Trash"
-Near :ivaldime-local:trash
+Channel ivaldi.me-trash
+Far :ivaldi.me-remote:"Trash"
+Near :ivaldi.me-local:trash
 
-Channel ivaldime-starred
-Far :ivaldime-remote:"Starred"
-Near :ivaldime-local:starred
+Channel ivaldi.me-starred
+Far :ivaldi.me-remote:"Starred"
+Near :ivaldi.me-local:starred
 
-Channel ivaldime-spam
-Far :ivaldime-remote:"Spam"
-Near :ivaldime-local:spam
+Channel ivaldi.me-spam
+Far :ivaldi.me-remote:"Spam"
+Near :ivaldi.me-local:spam
 
-Group ivaldime
-Channel ivaldime-inbox
-Channel ivaldime-sent
-Channel ivaldime-archive
-Channel ivaldime-starred
-Channel ivaldime-spam
-Channel ivaldime-trash
+Group ivaldi.me
+Channel ivaldi.me-inbox
+Channel ivaldi.me-sent
+Channel ivaldi.me-archive
+Channel ivaldi.me-starred
+Channel ivaldi.me-spam
+Channel ivaldi.me-trash
 
 #### ac-montpellier ACCOUNT #####
 
@@ -98,13 +98,13 @@ Channel ivaldime-trash
 
 #### OVYA ACCOUNT #####
 
-MaildirStore ovyafr-local
+MaildirStore ovya.fr-local
 SubFolders Verbatim
 ## Remember to create this directory : mkdir -p ~/Mail/ovya.fr
 Path ~/Mail/ovya.fr/
 Inbox ~/Mail/ovya.fr/inbox
 
-IMAPAccount ovyafr-account
+IMAPAccount ovya.fr-account
 Host imap.gmail.com
 UserCmd "pass mbsync.ovya.fr | grep 'login:' | awk '{print $2}'"
 PassCmd "pass mbsync.ovya.fr | head -1"
@@ -113,38 +113,38 @@ AuthMechs LOGIN
 TLSType IMAPS
 CertificateFile /etc/ssl/certs/ca-certificates.crt
 
-IMAPStore ovyafr-remote
-Account ovyafr-account
+IMAPStore ovya.fr-remote
+Account ovya.fr-account
 
-Channel ovyafr-inbox
-Far :ovyafr-remote:
-Near :ovyafr-local:
+Channel ovya.fr-inbox
+Far :ovya.fr-remote:
+Near :ovya.fr-local:
 Patterns "INBOX"
 
-Channel ovyafr-sent
-Far :ovyafr-remote:"[Gmail]/Sent Mail"
-Near :ovyafr-local:sent
+Channel ovya.fr-sent
+Far :ovya.fr-remote:"[Gmail]/Sent Mail"
+Near :ovya.fr-local:sent
 
-Channel ovyafr-trash
-Far :ovyafr-remote:"[Gmail]/Trash"
-Near :ovyafr-local:trash
+Channel ovya.fr-trash
+Far :ovya.fr-remote:"[Gmail]/Trash"
+Near :ovya.fr-local:trash
 
-Channel ovyafr-all
-Far :ovyafr-remote:"[Gmail]/All Mail"
-Near :ovyafr-local:all
+Channel ovya.fr-all
+Far :ovya.fr-remote:"[Gmail]/All Mail"
+Near :ovya.fr-local:all
 
-Channel ovyafr-starred
-Far :ovyafr-remote:"[Gmail]/Starred"
-Near :ovyafr-local:starred
+Channel ovya.fr-starred
+Far :ovya.fr-remote:"[Gmail]/Starred"
+Near :ovya.fr-local:starred
 
-Channel ovyafr-spam
-Far :ovyafr-remote:"[Gmail]/Spam"
-Near :ovyafr-local:spam
+Channel ovya.fr-spam
+Far :ovya.fr-remote:"[Gmail]/Spam"
+Near :ovya.fr-local:spam
 
-Group ovyafr
-Channel ovyafr-inbox
-Channel ovyafr-sent
-Channel ovyafr-all
-Channel ovyafr-starred
-Channel ovyafr-spam
-Channel ovyafr-trash
+Group ovya.fr
+Channel ovya.fr-inbox
+Channel ovya.fr-sent
+Channel ovya.fr-all
+Channel ovya.fr-starred
+Channel ovya.fr-spam
+Channel ovya.fr-trash

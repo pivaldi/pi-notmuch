@@ -48,7 +48,9 @@
      ))
 
   (notmuch-multi-accounts-saved-searches-set
-   `((:account (:name "IVALDI.ME" :query "'folder:\"/ivaldi.me*/\"' AND NOT tag:list and not delete and not deleted" :key-prefix "i")
+   `((:account (:name "IVALDI.ME" :query "'folder:\"/ivaldi.me*/\"' AND NOT tag:list and not delete and not deleted"
+                :key-prefix "i"
+                :get-command "mbsync --config \"${HOME}/.isyncrc\" --debug-driver ivaldi.me")
       :searches ,(append pi-notmuch-saved-searches
                          `((:name "Unclassified"
                             :query "NOT tag:ivaldi.me"
@@ -56,31 +58,33 @@
                             :search-type tree
                             :key ,(kbd "x")
                             ))))
-     (:account (:name "OVYA.FR" :query "tag:ovya.fr and not delete and not deleted" :key-prefix "o")
-      :searches
-      ,(append
-        pi-notmuch-saved-searches
-        `(( :name "Redmine"
-            :query "tag:redmine"
-            :sort-order newest-first
-            :search-type tree
-            :key ,(kbd "r"))
-          ( :name "Admin"
-                  :query "tag:admin"
-                  :sort-order newest-first
-                  :search-type tree
-                  :key ,(kbd "d"))
-          ( :name "Cron"
-                  :query "tag:cron"
-                  :sort-order newest-first
-                  :search-type tree
-                  :key ,(kbd "c"))
-          ( :name "Igal/Stanley"
-                  :query "tag:igal or tag:stanley"
-                  :sort-order newest-first
-                  :search-type tree
-                  :key ,(kbd "/")))
-        ))
+     (:account (:name "OVYA.FR" :query "tag:ovya.fr and not delete and not deleted"
+                :key-prefix "o"
+                :get-command "mbsync --config \"${HOME}/.isyncrc\" --debug-driver ovya.me")
+               :searches
+               ,(append
+                 pi-notmuch-saved-searches
+                 `(( :name "Redmine"
+                     :query "tag:redmine"
+                     :sort-order newest-first
+                     :search-type tree
+                     :key ,(kbd "r"))
+                   ( :name "Admin"
+                           :query "tag:admin"
+                           :sort-order newest-first
+                           :search-type tree
+                           :key ,(kbd "d"))
+                   ( :name "Cron"
+                           :query "tag:cron"
+                           :sort-order newest-first
+                           :search-type tree
+                           :key ,(kbd "c"))
+                   ( :name "Igal/Stanley"
+                           :query "tag:igal or tag:stanley"
+                           :sort-order newest-first
+                           :search-type tree
+                           :key ,(kbd "/")))
+                 ))
      (:account (:name "LISTS" :query "tag:list" :key-prefix "l")
       :searches
       (( :name "Emacsfr"
@@ -88,7 +92,7 @@
                :sort-order newest-first
                :search-type tree
                :key ,(kbd "e"))
-      ( :name "Cypherpunks"
+       ( :name "Cypherpunks"
                :query "tag:cpunks"
                :sort-order newest-first
                :search-type tree
@@ -118,9 +122,7 @@
    '(("p22@ivaldi.me" . "ivaldi.me/sent +sent -inbox -unread +ivaldi.me")
      ("pi@ovya.fr" . "ovya.fr/sent +sent -inbox -unread +ovya.fr")
      ("pivaldi@ovya.fr" . "ovya.fr/sent +sent -inbox -unread +ovya.fr")
-     ("pivaldi@ac-montpellier.fr" . "acmontpellier/sent +sent -inbox -unread +acmontpellier")
      ("bzgemacsfr.le.*@passmail.net" . "ivaldi.me/sent +sent -inbox -unread +list +emacsfr")
-     ("cypherpunks.*@passmail.net" . "ivaldi.me/sent +sent -inbox -unread +list +cpunks")
      (".*" . "sent +sent -inbox -unread")))
 
   ;; Cosmetic face attributs.
@@ -193,8 +195,7 @@
           gnus-alias-unknown-identity-rule 'continue
           ))
 
-  (set-face-attribute 'notmuch-search-unread-face nil :foreground "grey95")
-  )
+  (set-face-attribute 'notmuch-search-unread-face nil :foreground "grey95"))
 
 (provide 'pi/notmuch)
 ;; config.el ends here.
