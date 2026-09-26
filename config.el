@@ -50,7 +50,10 @@
   (notmuch-multi-accounts-saved-searches-set
    `((:account (:name "IVALDI.ME" :query "'folder:\"/ivaldi.me*/\"' AND NOT tag:list and not delete and not deleted"
                 :key-prefix "i"
-                :get-command "mbsync --config \"${HOME}/.isyncrc\" --debug-driver ivaldi.me")
+                :get-command "${HOME}/bin/mail-fetch-pivaldi.sh" ; comes from multiple sources
+                :address-term "to:@ivaldi.me"  ; scopes the candidate search
+                :send-as "@ivaldi\\.me\\'"     ; matches the From: when composing
+                )
       :searches ,(append pi-notmuch-saved-searches
                          `((:name "Unclassified"
                             :query "NOT tag:ivaldi.me"
@@ -58,9 +61,29 @@
                             :search-type tree
                             :key ,(kbd "x")
                             ))))
+     (:account (:name "PIPRIM" :query "tag:piprim AND NOT tag:list AND NOT delete AND NOT deleted"
+                :key-prefix "i"
+                :get-command "${HOME}/bin/mail-fetch-piprim.sh" ; comes from multiple sources
+                )
+               :searches ,(append pi-notmuch-saved-searches
+                                  `((:name "Banque"
+                                     :query "tag:banque"
+                                     :sort-order newest-first
+                                     :search-type tree
+                                     :key ,(kbd "b")
+                                     )
+                                    (:name "Compta"
+                                     :query "tag:compta"
+                                     :sort-order newest-first
+                                     :search-type tree
+                                     :key ,(kbd "c")
+                                     ))))
      (:account (:name "OVYA.FR" :query "tag:ovya.fr and not delete and not deleted"
                 :key-prefix "o"
-                :get-command "mbsync --config \"${HOME}/.isyncrc\" --debug-driver ovya.me")
+                :get-command "mbsync --config \"${HOME}/.isyncrc\" --debug-driver ovya.fr"
+                :address-term "to:@ovya.fr"  ; scopes the candidate search
+                :send-as "@ovya\\.fr\\'"     ; matches the From: when composing
+                )
                :searches
                ,(append
                  pi-notmuch-saved-searches
@@ -104,6 +127,7 @@
 
   (setq notmuch-tag-formats (append notmuch-tag-formats
                                     '(("ivaldi.me" (notmuch-apply-face tag 'notmuch-tag-added) "π")
+                                      ("piprim" (notmuch-apply-face tag 'notmuch-tag-added) "π'")
                                       ("acmontpellier" (notmuch-apply-face tag 'notmuch-tag-added) "AC-M")
                                       ("ovya.fr" (notmuch-apply-face tag 'notmuch-tag-added) "OVYA")
                                       ("list" (notmuch-apply-face tag 'notmuch-tag-added) "L")))

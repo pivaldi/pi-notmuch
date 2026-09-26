@@ -8,7 +8,7 @@ SyncState *
 CopyArrivalDate yes
 # PipelineDepth 10
 
-#### ivaldi.me ACCOUNT #####
+#### p22@ivaldi.me ACCOUNT #####
 
 MaildirStore ivaldi.me-local
 SubFolders Verbatim
@@ -18,8 +18,8 @@ Inbox ~/Mail/ivaldi.me/inbox
 
 IMAPAccount ivaldi.me-account
 Host 127.0.0.1
-UserCmd "gpg -q --for-your-eyes-only -d ~/.authinfo.gpg | awk -F ' ' '/127.0.0.1/ { print $(NF-4); exit; }'"
-PassCmd "gpg -q --for-your-eyes-only -d ~/.authinfo.gpg | awk -F ' ' '/127.0.0.1/ { print $(NF-2); exit; }'"
+User "p22@ivaldi.me"
+PassCmd "gpg -q --for-your-eyes-only -d ~/.authinfo.gpg | awk -F ' ' '/p22@ivaldi.me/ { print $(NF-2); exit; }'"
 Port 1143
 TLSType STARTTLS
 CertificateFile /etc/ssl/certs/proton-bridge.pem
@@ -60,41 +60,213 @@ Channel ivaldi.me-starred
 Channel ivaldi.me-spam
 Channel ivaldi.me-trash
 
-#### ac-montpellier ACCOUNT #####
+#### catchall@ivaldi.me ACCOUNT #####
 
-# MaildirStore acmontpellier-local
-# SubFolders Verbatim
-# ## Remember to create this directory : mkdir -p ~/Mail/ivaldi.me
-# Path ~/Mail/acmontpellier/
-# Inbox ~/Mail/acmontpellier/inbox
+MaildirStore catchall@ivaldi.me-local
+SubFolders Verbatim
+## Remember to create this directory : mkdir -p ~/Mail/catchall@ivaldi.me
+Path ~/Mail/catchall@ivaldi.me/
+Inbox ~/Mail/catchall@ivaldi.me/inbox
 
-# IMAPAccount acmontpellier-account
-# Host courrier.ac-montpellier.fr
-# UserCmd "gpg -q --for-your-eyes-only -d ~/.authinfo.gpg | awk -F ' ' '/acmontpellier/ { print $(NF-2); exit; }'"
-# PassCmd "gpg -q --for-your-eyes-only -d ~/.authinfo.gpg | awk -F ' ' '/acmontpellier/ { print $(NF); exit; }'"
-# Port 993
-# TLSType IMAPS
+IMAPAccount catchall@ivaldi.me-account
+Host 127.0.0.1
+User "catchall@ivaldi.me"
+PassCmd "gpg -q --for-your-eyes-only -d ~/.authinfo.gpg | awk -F ' ' '/p22@ivaldi.me/ { print $(NF-2); exit; }'"
+Port 1143
+TLSType STARTTLS
+CertificateFile /etc/ssl/certs/proton-bridge.pem
 
-# IMAPStore acmontpellier-remote
-# Account acmontpellier-account
+IMAPStore catchall@ivaldi.me-remote
+Account catchall@ivaldi.me-account
 
-# Channel acmontpellier-inbox
-# Far :acmontpellier-remote:
-# Near :acmontpellier-local:
-# Patterns "INBOX"
+Channel catchall@ivaldi.me-inbox
+Far :catchall@ivaldi.me-remote:
+Near :catchall@ivaldi.me-local:
+Patterns "INBOX"
 
-# Channel acmontpellier-sent
-# Far :acmontpellier-remote:"Sent"
-# Near :acmontpellier-local:sent
+Channel catchall@ivaldi.me-sent
+Far :catchall@ivaldi.me-remote:"Sent"
+Near :catchall@ivaldi.me-local:sent
 
-# Channel acmontpellier-trash
-# Far :acmontpellier-remote:"Corbeille"
-# Near :acmontpellier-local:trash
+Channel catchall@ivaldi.me-archive
+Far :catchall@ivaldi.me-remote:"Archive"
+Near :catchall@ivaldi.me-local:archive
 
-# Group acmontpellier
-# Channel acmontpellier-inbox
-# Channel acmontpellier-sent
-# Channel acmontpellier-trash
+Channel catchall@ivaldi.me-trash
+Far :catchall@ivaldi.me-remote:"Trash"
+Near :catchall@ivaldi.me-local:trash
+
+Channel catchall@ivaldi.me-starred
+Far :catchall@ivaldi.me-remote:"Starred"
+Near :catchall@ivaldi.me-local:starred
+
+Channel catchall@ivaldi.me-spam
+Far :catchall@ivaldi.me-remote:"Spam"
+Near :catchall@ivaldi.me-local:spam
+
+Group catchall@ivaldi.me
+Channel catchall@ivaldi.me-inbox
+Channel catchall@ivaldi.me-sent
+Channel catchall@ivaldi.me-archive
+Channel catchall@ivaldi.me-starred
+Channel catchall@ivaldi.me-spam
+Channel catchall@ivaldi.me-trash
+
+########### piprim@pm.me Acount ####
+
+IMAPAccount piprim@pm.me-account
+Host 127.0.0.1
+User piprim@pm.me
+PassCmd "gpg -q --for-your-eyes-only -d ~/.authinfo.gpg | awk -F ' ' '/piprim@pm.me/ { print $(NF-2); exit; }'"
+Port 1143
+TLSType STARTTLS
+CertificateFile /etc/ssl/certs/proton-bridge.pem
+
+MaildirStore piprim@pm.me-local
+SubFolders Verbatim
+## Remember to create this directory : mkdir -p ~/Mail/piprim@pm.me
+Path ~/Mail/piprim@pm.me/
+Inbox ~/Mail/piprim@pm.me/inbox
+
+IMAPStore piprim@pm.me-remote
+Account piprim@pm.me-account
+
+Channel piprim@pm.me-inbox
+Far :piprim@pm.me-remote:
+Near :piprim@pm.me-local:
+Patterns "INBOX"
+
+Channel piprim@pm.me-sent
+Far :piprim@pm.me-remote:"Sent"
+Near :piprim@pm.me-local:sent
+
+Channel piprim@pm.me-archive
+Far :piprim@pm.me-remote:"Archive"
+Near :piprim@pm.me-local:archive
+
+Channel piprim@pm.me-trash
+Far :piprim@pm.me-remote:"Trash"
+Near :piprim@pm.me-local:trash
+
+Channel piprim@pm.me-starred
+Far :piprim@pm.me-remote:"Starred"
+Near :piprim@pm.me-local:starred
+
+Channel piprim@pm.me-spam
+Far :piprim@pm.me-remote:"Spam"
+Near :piprim@pm.me-local:spam
+
+Group piprim@pm.me
+Channel piprim@pm.me-inbox
+Channel piprim@pm.me-sent
+Channel piprim@pm.me-archive
+Channel piprim@pm.me-starred
+Channel piprim@pm.me-spam
+Channel piprim@pm.me-trash
+
+########### pi@piprim.fr Acount ####
+IMAPAccount pi@piprim.fr-account
+Host 127.0.0.1
+User pi@piprim.fr
+PassCmd "gpg -q --for-your-eyes-only -d ~/.authinfo.gpg | awk -F ' ' '/pi@piprim.fr/ { print $(NF-2); exit; }'"
+Port 1143
+TLSType STARTTLS
+CertificateFile /etc/ssl/certs/proton-bridge.pem
+
+MaildirStore pi@piprim.fr-local
+SubFolders Verbatim
+## Remember to create this directory : mkdir -p ~/Mail/pi@piprim.fr
+Path ~/Mail/pi@piprim.fr/
+Inbox ~/Mail/pi@piprim.fr/inbox
+
+IMAPStore pi@piprim.fr-remote
+Account pi@piprim.fr-account
+
+Channel pi@piprim.fr-inbox
+Far :pi@piprim.fr-remote:
+Near :pi@piprim.fr-local:
+Patterns "INBOX"
+
+Channel pi@piprim.fr-sent
+Far :pi@piprim.fr-remote:"Sent"
+Near :pi@piprim.fr-local:sent
+
+Channel pi@piprim.fr-archive
+Far :pi@piprim.fr-remote:"Archive"
+Near :pi@piprim.fr-local:archive
+
+Channel pi@piprim.fr-trash
+Far :pi@piprim.fr-remote:"Trash"
+Near :pi@piprim.fr-local:trash
+
+Channel pi@piprim.fr-starred
+Far :pi@piprim.fr-remote:"Starred"
+Near :pi@piprim.fr-local:starred
+
+Channel pi@piprim.fr-spam
+Far :pi@piprim.fr-remote:"Spam"
+Near :pi@piprim.fr-local:spam
+
+Group pi@piprim.fr
+Channel pi@piprim.fr-inbox
+Channel pi@piprim.fr-sent
+Channel pi@piprim.fr-archive
+Channel pi@piprim.fr-starred
+Channel pi@piprim.fr-spam
+Channel pi@piprim.fr-trash
+
+
+########### pi@piprime.fr Acount ####
+IMAPAccount pi@piprime.fr-account
+Host 127.0.0.1
+User pi@piprime.fr
+PassCmd "gpg -q --for-your-eyes-only -d ~/.authinfo.gpg | awk -F ' ' '/pi@piprime.fr/ { print $(NF-2); exit; }'"
+Port 1143
+TLSType STARTTLS
+CertificateFile /etc/ssl/certs/proton-bridge.pem
+
+MaildirStore pi@piprime.fr-local
+SubFolders Verbatim
+## Remember to create this directory : mkdir -p ~/Mail/pi@piprime.fr
+Path ~/Mail/pi@piprime.fr/
+Inbox ~/Mail/pi@piprime.fr/inbox
+
+IMAPStore pi@piprime.fr-remote
+Account pi@piprime.fr-account
+
+Channel pi@piprime.fr-inbox
+Far :pi@piprime.fr-remote:
+Near :pi@piprime.fr-local:
+Patterns "INBOX"
+
+Channel pi@piprime.fr-sent
+Far :pi@piprime.fr-remote:"Sent"
+Near :pi@piprime.fr-local:sent
+
+Channel pi@piprime.fr-archive
+Far :pi@piprime.fr-remote:"Archive"
+Near :pi@piprime.fr-local:archive
+
+Channel pi@piprime.fr-trash
+Far :pi@piprime.fr-remote:"Trash"
+Near :pi@piprime.fr-local:trash
+
+Channel pi@piprime.fr-starred
+Far :pi@piprime.fr-remote:"Starred"
+Near :pi@piprime.fr-local:starred
+
+Channel pi@piprime.fr-spam
+Far :pi@piprime.fr-remote:"Spam"
+Near :pi@piprime.fr-local:spam
+
+Group pi@piprime.fr
+Channel pi@piprime.fr-inbox
+Channel pi@piprime.fr-sent
+Channel pi@piprime.fr-archive
+Channel pi@piprime.fr-starred
+Channel pi@piprime.fr-spam
+Channel pi@piprime.fr-trash
+
 
 #### OVYA ACCOUNT #####
 
@@ -129,9 +301,9 @@ Channel ovya.fr-trash
 Far :ovya.fr-remote:"[Gmail]/Trash"
 Near :ovya.fr-local:trash
 
-Channel ovya.fr-all
-Far :ovya.fr-remote:"[Gmail]/All Mail"
-Near :ovya.fr-local:all
+# Channel ovya.fr-all
+# Far :ovya.fr-remote:"[Gmail]/All Mail"
+# Near :ovya.fr-local:all
 
 Channel ovya.fr-starred
 Far :ovya.fr-remote:"[Gmail]/Starred"
@@ -144,7 +316,7 @@ Near :ovya.fr-local:spam
 Group ovya.fr
 Channel ovya.fr-inbox
 Channel ovya.fr-sent
-Channel ovya.fr-all
+# Channel ovya.fr-all
 Channel ovya.fr-starred
 Channel ovya.fr-spam
 Channel ovya.fr-trash

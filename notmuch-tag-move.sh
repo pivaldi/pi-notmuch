@@ -3,8 +3,8 @@
 ## Move $1 to the *relative to $MAILDIR* $2 directory.
 function moveTo {
     fromFile="$1"
-    toDirectory="${2#/}"            ## Remove first slash if exists.
-    toDirectory="${toDirectory=%/}" ## Remove last trailing slash if exists.
+    toDirectory="${2#/}"           ## Remove first slash if exists.
+    toDirectory="${toDirectory%/}" ## Remove last trailing slash if exists.
     toDirectory="${MAILDIR}/${toDirectory}/cur"
 
     toFile="${fromFile##*/}" ## Filename without directory part.
@@ -31,19 +31,12 @@ function moveToByFilter {
     unset IFS
 }
 
-function moveExpireToTrash {
-    account="$1"
-    trashDir="$account/trash"
-    echo "Account $account -- Moving emails tagged with expire and older than 90 days to ${trashDir}."
-    moveToByFilter "tag:$account AND tag:expire AND (NOT tag:deleted) AND (NOT tag:delete) AND date:-90d" "$trashDir"
-}
-
 function delete {
     filter="$1"
     files="$(notmuch search --exclude=false --output=files -- "$filter")"
     echo "Removing emails filtered by '${filter}'."
     echo -n 'Number of impacted mails is '
-    notmuch count -- "$filter"
+    notmuch count --exclude=false -- "$filter"
     echo
 
     IFS=$'\n'
@@ -51,16 +44,34 @@ function delete {
         echo -n "Removing file $file  "
         rm "$file" && echo '[DONE]' || {
             echo '[FAILED]'
-            exit 1
         }
     done
     unset IFS
 }
 
-function deleteFromTrash30d {
-    account="$1"
-    echo "Account $account -- Removing emails tagged deleted from 30 days."
-    delete "tag:$account AND tag:deleted AND date:-30d"
+## Move/remove the mails of one mailbox according to the tags set by .notmuch-tagging.
+## $1 = mailbox directory relative to $MAILDIR, $2 = account tag set by .notmuch-tagging.
+function processMailbox {
+    dir="$1"
+    accountTag="$2"
+    scope="tag:${accountTag} AND path:\"${dir}/**\""
+    trashDir="${dir}/trash"
+    archiveDir="${dir}/archive"
+    starredDir="${dir}/starred"
+
+    echo "Processing ${dir} (tag:${accountTag})..."
+
+    echo 'Moving emails tagged expire and older than 90 days to trash'
+    moveToByFilter "${scope} AND tag:expire AND (NOT tag:deleted) AND (NOT tag:delete) AND date:..90d AND (NOT folder:\"${trashDir}\")" "$trashDir"
+
+    echo 'Moving archived mails'
+    moveToByFilter "${scope} AND tag:archived AND (NOT folder:\"${archiveDir}\")" "$archiveDir"
+
+    echo 'Moving emails tagged delete to trash'
+    moveToByFilter "${scope} AND tag:delete AND (NOT folder:\"${trashDir}\")" "$trashDir"
+
+    echo 'Removing emails tagged deleted and older than 30 days'
+    delete "${scope} AND tag:deleted AND date:..30d AND folder:\"${trashDir}\""
 }
 
 function synchronizeNotmuch {
@@ -73,35 +84,22 @@ synchronizeNotmuch
 
 echo "Moving messages according to notmuch tags"
 
-###{{### Moving IVALDI.ME mails depending of notmuch tags ###
-DIR='ivaldi.me'
-# DIR_INBOX="$DIR/inbox"
-DIR_TRASH="$DIR/trash"
-DIR_ARCHIVE="$DIR/archive"
-
-echo 'Processing IVALDI.ME...'
-moveExpireToTrash "ivaldi.me"
-
-echo 'Moving archived mails'
-moveToByFilter "tag:ivaldi.me AND tag:archived AND (NOT folder:$DIR_ARCHIVE)" "$DIR_ARCHIVE"
-
-echo 'Moving emails tagged with delete to Trash'
-moveToByFilter "tag:delete AND (NOT tag:deleted) AND tag:ivaldi.me AND (NOT folder:$DIR_TRASH)" "$DIR_TRASH"
-
-echo 'Remove mails tagged as deleted 30 days old'
-delete "tag:ivaldi.me AND tag:deleted AND date:-30d AND 'folder:\"$DIR_TRASH\"'"
-
+###{{### Proton mailboxes: move/remove depending on notmuch tags ###
+processMailbox 'ivaldi.me' 'ivaldi.me'
+processMailbox 'catchall@ivaldi.me' 'ivaldi.me'
+processMailbox 'pi@piprim.fr' 'piprim'
+processMailbox 'pi@piprime.fr' 'piprim'
+processMailbox 'piprim@pm.me' 'piprim'
 ###}}###
 
 ###{{### Moving OVYA.FR mails depending of notmuch tags ###
 DIR='ovya.fr'
-# DIR_INBOX="$DIR/inbox"
 DIR_TRASH="$DIR/trash"
 DIR_ARCHIVE="$DIR/all"
 
 echo 'Processing OVYA.FR...'
 echo 'Removing emails tagged expire 90 days old.'
-delete "tag:ovya.fr AND tag:expire AND (NOT tag:deleted) AND (NOT tag:delete) AND date:-90d"
+delete "tag:ovya.fr AND tag:expire AND (NOT tag:deleted) AND (NOT tag:delete) AND date:..90d"
 # moveExpireToTrash "ovya.fr"
 
 # echo 'Moving archived mails'
@@ -132,7 +130,7 @@ delete "tag:ovya.fr AND tag:expire AND (NOT tag:deleted) AND (NOT tag:delete) AN
 # moveToByFilter "tag:ovya.fr AND (NOT tag:archived) AND tag:delete AND (NOT tag:deleted) AND (NOT 'folder:\"$DIR_TRASH\"')" "$DIR_TRASH"
 
 echo 'Removing emails tagged deleted 30 days old.'
-delete "tag:ovya.fr AND tag:delete AND date:-30d"
+delete "tag:ovya.fr AND tag:delete AND date:..30d"
 
 ###}}###
 

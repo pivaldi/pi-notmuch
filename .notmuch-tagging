@@ -1,18 +1,35 @@
 ## Note : my Notmuch configuration set the tag "new" to all new message.
 
-## +ivaldi.me -- tag:new AND (DeliveredTo:@ivaldi.me OR Delivered-To:@protonmail.com OR Delivered-To:@pm.me OR to:/@ivaldi.me/ OR from:/@ivaldi.me/ OR cc:/@ivaldi.me/ OR bcc:/@ivaldi.me/)
-+inbox +ivaldi.me -- tag:new AND folder:"ivaldi.me/inbox"
--unread -inbox -delete +deleted +ivaldi.me -- folder:"ivaldi.me/trash"
--unread -inbox +spam +ivaldi.me -- tag:new AND folder:"ivaldi.me/spam"
--unread -inbox +sent +ivaldi.me -- tag:new AND folder:"ivaldi.me/sent"
--unread -inbox +archived +ivaldi.me -- tag:new AND folder:"ivaldi.me/archive"
-+flagged -- tag:new AND folder:"ivaldi.me/starred"
+## IVALDI
++inbox +ivaldi.me -- (folder:"ivaldi.me/inbox" OR folder:"catchall@ivaldi.me/inbox") AND NOT (tag:archived OR tag:spam OR tag:delete OR tag:deleted OR tag:expire)
+-inbox -delete +deleted +ivaldi.me -- folder:"ivaldi.me/trash" OR folder:"catchall@ivaldi.me/trash"
+-inbox +spam +ivaldi.me -- folder:"ivaldi.me/spam" OR folder:"catchall@ivaldi.me/spam"
+-inbox +sent +ivaldi.me -- folder:"ivaldi.me/sent" OR folder:"catchall@ivaldi.me/sent"
+-inbox +archived +ivaldi.me -- folder:"ivaldi.me/archive" OR folder:"catchall@ivaldi.me/archive"
+## Only on new messages, so a manual unread/unflag is not undone at the next sync.
+-unread -- tag:new AND (folder:"ivaldi.me/trash" OR folder:"catchall@ivaldi.me/trash" OR folder:"ivaldi.me/spam" OR folder:"catchall@ivaldi.me/spam" OR folder:"ivaldi.me/sent" OR folder:"catchall@ivaldi.me/sent" OR folder:"ivaldi.me/archive" OR folder:"catchall@ivaldi.me/archive")
++flagged -- tag:new AND (folder:"ivaldi.me/starred" OR folder:"catchall@ivaldi.me/starred")
+
+## PIPRIM
++inbox +piprim -- (folder:"piprim@pm.me/inbox" OR folder:"pi@piprim.fr/inbox" OR folder:"pi@piprime.fr/inbox") AND NOT (tag:archived OR tag:spam OR tag:delete OR tag:deleted OR tag:expire)
++pppm -- path:"piprim@pm.me/**"
++ppfr -- path:"pi@piprim.fr/**"
++ppefr -- path:"pi@piprime.fr/**"
+-inbox -delete +deleted +piprim -- folder:"piprim@pm.me/trash" OR folder:"pi@piprim.fr/trash" OR folder:"pi@piprime.fr/trash"
+-inbox +spam +piprim -- folder:"piprim@pm.me/spam" OR folder:"pi@piprim.fr/spam" OR folder:"pi@piprime.fr/spam"
+-inbox +sent +piprim -- folder:"piprim@pm.me/sent" OR folder:"pi@piprim.fr/sent" OR folder:"pi@piprime.fr/sent"
+-inbox +archived +piprim -- folder:"piprim@pm.me/archive" OR folder:"pi@piprim.fr/archive" OR folder:"pi@piprime.fr/archive"
+## Only on new messages, so a manual unread/unflag is not undone at the next sync.
+-unread -- tag:new AND (folder:"piprim@pm.me/trash" OR folder:"pi@piprim.fr/trash" OR folder:"pi@piprime.fr/trash" OR folder:"piprim@pm.me/spam" OR folder:"pi@piprim.fr/spam" OR folder:"pi@piprime.fr/spam" OR folder:"piprim@pm.me/sent" OR folder:"pi@piprim.fr/sent" OR folder:"pi@piprime.fr/sent" OR folder:"piprim@pm.me/archive" OR folder:"pi@piprim.fr/archive" OR folder:"pi@piprime.fr/archive")
++flagged -- tag:new AND (folder:"piprim@pm.me/starred" OR folder:"pi@piprim.fr/starred" OR folder:"pi@piprime.fr/starred")
+
++banque -- (from:"/.*@qonto.com/" OR to:"/.*@qonto.com/")
++compta -- (from:"/.*@sarl-fcgo.fr/" OR to:"/.*@sarl-fcgo.fr/")
 
 ## Lists
 +list -- tag:new AND 'from:"/.*@lists.sr.ht.*/"'
 +emacsfr +list -- tag:new AND to:"/.*bzg.?emacsfr.*/"
-+cpunks +list -- tag:new AND to:"/.*cpunks.org.*/"
 
 
 ## Specific Spam Management
--unread -inbox +spam -- tag:new AND (XSender:/@salesforce.com/ OR from:/@weassmbltek.com/)
+-unread -inbox -important -archive +spam +expire -- tag:new AND ('XSender:"/@xxxxxxxx.com/"' OR 'from:"/.*@weassmbltek.com.*|.*alharajalbahri.com.*/"')
